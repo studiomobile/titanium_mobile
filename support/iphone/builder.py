@@ -1053,7 +1053,15 @@ def main(args):
 			debug_plist = os.path.join(iphone_dir,'Resources','debugger.plist')
 			
 			# Force an xcodebuild if the debugger.plist has changed
-			force_xcode = write_debugger_plist(debughost, debugport, debugairkey, debughosts, template_dir, debug_plist)
+			# force_xcode = write_debugger_plist(debughost, debugport, debugairkey, debughosts, template_dir, debug_plist)
+			debug_plist_changed = write_debugger_plist(debughost, debugport, debugairkey, debughosts, template_dir, debug_plist)
+			if debug_plist_changed:
+				if os.path.exists(app_dir):
+					o.write("Replacing debugger.plist wihtout forcing rebuild\n")
+					os.system("/usr/bin/plutil -convert binary1 \"%s\" -o \"%s\"" % (debug_plist, os.path.join(app_dir, 'debugger.plist')))
+				else:
+					o.write("debugger.plist changed. Force rebuild\n")
+					force_xcode = True
 
 			if command not in ['simulator', 'build']:
 				# compile plist into binary format so it's faster to load
