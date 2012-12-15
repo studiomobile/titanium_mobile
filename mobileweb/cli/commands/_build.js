@@ -55,7 +55,7 @@ exports.config = function (logger, config, cli) {
 
 exports.validate = function (logger, config, cli) {
 	ti.validateProjectDir(logger, cli, cli.argv, 'project-dir');
-	if (!ti.validateCorrectSDK(logger, config, cli)) {
+	if (!ti.validateCorrectSDK(logger, config, cli, 'build')) {
 		// we're running the build command for the wrong SDK version, gracefully return
 		return false;
 	}
@@ -107,11 +107,11 @@ function build(logger, config, cli, finished) {
 	this.projectDir = afs.resolvePath(cli.argv['project-dir']);
 	this.projectResDir = this.projectDir + '/Resources';
 	this.buildDir = this.projectDir + '/build/mobileweb';
-	this.mobilewebSdkPath = afs.resolvePath(path.dirname(module.filename) + '/../..');
+	this.mobilewebSdkPath = afs.resolvePath(path.dirname(module.filename), '..', '..');
 	this.mobilewebThemeDir = this.mobilewebSdkPath + '/themes';
 	this.mobilewebTitaniumDir = this.mobilewebSdkPath + '/titanium';
 	
-	this.moduleSearchPaths = [ this.projectDir, afs.resolvePath(this.titaniumIosSdkPath, '..', '..', '..', '..') ];
+	this.moduleSearchPaths = [ this.projectDir, afs.resolvePath(this.mobilewebSdkPath, '..', '..', '..', '..') ];
 	if (config.paths && Array.isArray(config.paths.modules)) {
 		this.moduleSearchPaths = this.moduleSearchPaths.concat(config.paths.modules);
 	}
@@ -696,13 +696,17 @@ build.prototype = {
 			], function (err, stdout, stderr) {
 				if (err) {
 					this.logger.error(__('Failed to create icons'));
-					stderr && stderr.toString().split('\n').forEach(function (line) {
-						line && this.logger.error(line);
+					stdout && stdout.toString().split('\n').forEach(function (line) {
+						line && this.logger.error(line.replace(/^\[ERROR\]/i, '').trim());
 					}, this);
+					stderr && stderr.toString().split('\n').forEach(function (line) {
+						line && this.logger.error(line.replace(/^\[ERROR\]/i, '').trim());
+					}, this);
+					this.logger.log('');
 					process.exit(1);
 				}
 				callback();
-			}.bind(this));
+			}.bind(this), this.logger);
 		} else {
 			callback();
 		}
