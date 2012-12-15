@@ -44,6 +44,7 @@ typedef enum
 
 @property(nonatomic,readonly)	NSString *tableClass;
 @property(nonatomic, readonly) BOOL reusable; // Readonly until reproxy/reuse implemented properly
+-(void)setSelectedBackgroundColor:(id)arg;
 
 #pragma mark Framework
 

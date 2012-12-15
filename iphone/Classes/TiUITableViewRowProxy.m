@@ -498,9 +498,9 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	[(TiUITableViewCell *)cell setBackgroundGradient_:[self valueForKey:@"backgroundGradient"]];
 	[(TiUITableViewCell *)cell setSelectedBackgroundGradient_:[self valueForKey:@"selectedBackgroundGradient"]];
 
+	id bgColor = [self valueForKey:@"backgroundColor"];
+	cell.backgroundColor = [(TiColor*)bgColor _color];
 	id bgImage = [self valueForKey:@"backgroundImage"];
-	id selBgColor = [self valueForKey:@"selectedBackgroundColor"];
-
 	if (bgImage!=nil)
 	{
 		NSURL *url = [TiUtils toURL:bgImage proxy:(TiProxy*)table.proxy];
@@ -519,7 +519,13 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	{
 		cell.backgroundView = nil;
 	}
-	
+	if (!bgImage && bgColor) {
+		if(CGColorGetAlpha([[bgColor _color] CGColor])<1.0) {
+			[[cell textLabel] setBackgroundColor:[UIColor clearColor]];
+		}
+	}
+
+	id selBgColor = [self valueForKey:@"selectedBackgroundColor"];
 	id selBgImage = [self valueForKey:@"selectedBackgroundImage"];
 	if (selBgImage!=nil)
 	{
@@ -549,15 +555,15 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 			// square corners on a rounded row
 			if ([cell selectionStyle]==UITableViewCellSelectionStyleBlue)
 			{
-				selBgColor = @"#0272ed";
+				selBgColor = [TiColor colorNamed:@"#0272ed"];
 			}
 			else if ([cell selectionStyle]==UITableViewCellSelectionStyleGray)
 			{
-				selBgColor = @"#bbb";
+				selBgColor = [TiColor colorNamed:@"#bbb"];
 			}
 			else 
 			{
-				selBgColor = @"#fff";
+				selBgColor = [TiColor colorNamed:@"#fff"];
 			}
 		}
 		if (cell.selectedBackgroundView == nil || [cell.selectedBackgroundView isKindOfClass:[TiSelectedCellBackgroundView class]]==NO)
@@ -585,7 +591,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 				selectedBGView.position = TiCellBackgroundViewPositionMiddle;
 			}
 		}
-		selectedBGView.fillColor = [Webcolor webColorNamed:selBgColor];	
+		selectedBGView.fillColor = [(TiColor*)selBgColor _color];	
 		selectedBGView.grouped = [[table tableView] style]==UITableViewStyleGrouped;
 	}
 	else if (cell.selectedBackgroundView!=nil)
@@ -937,6 +943,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 
 -(void)setSelectedBackgroundColor:(id)arg
 {
+	arg = [TiUtils colorValue:arg];
 	[self replaceValue:arg forKey:@"selectedBackgroundColor" notification:NO];	
 	if (callbackCell != nil) {
 		[self configureBackground:callbackCell];
@@ -972,7 +979,6 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	[self replaceValue:newGradient forKey:@"selectedBackgroundGradient" notification:NO];
 	TiThreadPerformOnMainThread(^{[callbackCell setSelectedBackgroundGradient_:newGradient];}, NO);
 }
-
 
 -(void)propertyChanged:(NSString*)key oldValue:(id)oldValue newValue:(id)newValue proxy:(TiProxy*)proxy
 {

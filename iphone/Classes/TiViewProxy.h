@@ -219,6 +219,7 @@ enum
 -(id)animatedCenter;
 
 -(void)setBackgroundGradient:(id)arg;
+- (void)setBackgroundColor:(id)color;
 -(TiBlob*)toImage:(id)args;
 
 #pragma mark nonpublic accessors not related to Housecleaning

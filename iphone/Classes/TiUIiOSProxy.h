@@ -42,5 +42,7 @@
 -(id)createDocumentViewer:(id)args;
 #endif
 
+- (id)createColorWithPatternImage:(id)args;
+
 @end
 

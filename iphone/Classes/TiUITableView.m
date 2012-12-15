@@ -286,8 +286,6 @@
 	}
 }
 
-
-
 @end
 
 @implementation TiUITableView
@@ -2080,35 +2078,6 @@ return result;	\
 		search = YES;
 	}
 	[self triggerActionForIndexPath:indexPath fromPath:nil tableView:ourTableView wasAccessory:NO search:search name:@"click"];
-}
-
-
--(void)tableView:(UITableView *)ourTableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSIndexPath* index = indexPath;
-	if (ourTableView != tableview) {
-		index = [self indexPathFromSearchIndex:[indexPath row]];
-	}
-	
-	TiUITableViewRowProxy *row = [self rowForIndexPath:index];
-	
-	NSString *color = [row valueForKey:@"backgroundColor"];
-	if (color==nil)
-	{
-		color = [self.proxy valueForKey:@"rowBackgroundColor"];
-		if (color==nil)
-		{
-			color = [self.proxy valueForKey:@"backgroundColor"];
-		}
-	}
-	UIColor * cellColor = [Webcolor webColorNamed:color];
-	if (cellColor == nil) {
-		cellColor = [UIColor whiteColor];
-	}
-	cell.backgroundColor = cellColor;
-	if(CGColorGetAlpha([cellColor CGColor])<1.0) {
-		[[cell textLabel] setBackgroundColor:[UIColor clearColor]];
-	}
 }
 
 - (NSString *)tableView:(UITableView *)ourTableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath

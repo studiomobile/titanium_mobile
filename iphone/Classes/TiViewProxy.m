@@ -612,6 +612,14 @@ LAYOUTFLAGS_SETTER(setHorizontalWrap,horizontalWrap,horizontalWrap,[self willCha
 	[self replaceValue:newGradient forKey:@"backgroundGradient" notification:YES];
 }
 
+- (void)setBackgroundColor:(id)color {
+	if (![color isKindOfClass:[TiColor class]]) 
+	{
+		color = [TiUtils colorValue:color];
+	}
+	[self replaceValue:color forKey:@"backgroundColor" notification:YES];
+}
+
 -(TiBlob*)toImage:(id)args
 {
     KrollCallback *callback = nil;

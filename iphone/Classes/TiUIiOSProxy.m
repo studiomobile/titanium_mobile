@@ -8,6 +8,7 @@
 #import "TiUIiOSProxy.h"
 #import "TiUtils.h"
 #import "Webcolor.h"
+#import "TiColor.h"
 
 #ifdef USE_TI_UIIOS
  
@@ -95,6 +96,10 @@
 }
 #endif
 
+- (id)createColorWithPatternImage:(NSArray*)args {
+	NSURL *url = [TiUtils toURL:[args objectAtIndex:0] proxy:self];
+	return [TiColor colorWithPatternImage:url];
+}
 
 #ifdef USE_TI_UIIOS
 MAKE_SYSTEM_PROP_DEPRECATED_REPLACED(ANIMATION_CURVE_EASE_IN_OUT, UIViewAnimationOptionCurveEaseInOut, @"UI.iOS.ANIMATION_CURVE_EASE_IN_OUT", @"2.1.0", @"Ti.UI.ANIMATION_CURVE_EASE_IN_OUT");

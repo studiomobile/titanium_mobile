@@ -23,6 +23,12 @@
  @return The color proxy object.
  */
 +(id)colorNamed:(NSString *)name;
+/**
+Returns color proxy with pattern image
+@param imageUrl The pattern image URL
+@return The color proxy object with color created by [UIColor colorWithPatterImage:] and name set to imageUrl absolute string
+*/
++(id)colorWithPatternImage:(NSURL*)imageUrl;
 
 /**
  Initializes the color proxy with color and name.

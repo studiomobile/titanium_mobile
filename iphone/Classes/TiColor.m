@@ -9,6 +9,7 @@
 #import "Webcolor.h"
 #import "TiBase.h"
 #import "TiUtils.h"
+#import "ImageLoader.h"
 //TODO: Move all of Webcolor into TiColor.
 
 @implementation TiColor
@@ -34,6 +35,18 @@
     }
 	result = [[self alloc] initWithColor:translatedColor name:name];
 	return [result autorelease];
+}
+
++(id)colorWithPatternImage:(NSURL*)imageUrl {
+	UIImage *image = [[ImageLoader sharedLoader] loadImmediateImage:imageUrl];
+	if (!image) {
+		return nil;
+	}
+	UIColor *color = [UIColor colorWithPatternImage:image];
+	if (!color) {
+		return nil;
+	}
+	return [[[self alloc] initWithColor:color name:[imageUrl absoluteString]] autorelease];
 }
 
 -(id)initWithColor:(UIColor*)color_ name:(NSString*)name_
