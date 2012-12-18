@@ -60,7 +60,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect,
 	UIColor *fillColor;
 	BOOL grouped;
 }
-@property(nonatomic) TiCellBackgroundViewPosition position;
+@property(nonatomic, assign) TiUITableViewRowProxy *rowProxy;
 @property(nonatomic,retain) UIColor *fillColor;
 @property(nonatomic) BOOL grouped;
 @end
@@ -68,7 +68,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect,
 #define ROUND_SIZE 10
 
 @implementation TiSelectedCellBackgroundView
-@synthesize position,fillColor,grouped;
+@synthesize rowProxy,fillColor,grouped;
 
 -(void)dealloc
 {
@@ -83,6 +83,29 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect,
 
 -(void)drawRect:(CGRect)rect 
 {
+	int row = rowProxy.row;
+	int count = [rowProxy.section rowCount];
+	TiCellBackgroundViewPosition position;
+	if (count == 1)
+	{
+		position = TiCellBackgroundViewPositionSingleLine;
+	}
+	else 
+	{
+		if (row == 0)
+		{
+			position = TiCellBackgroundViewPositionTop;
+		}
+		else if (row == count-1)
+		{
+			position = TiCellBackgroundViewPositionBottom;
+		}
+		else 
+		{
+			position = TiCellBackgroundViewPositionMiddle;
+		}
+	}
+
     CGContextRef ctx = UIGraphicsGetCurrentContext();
 	
 	CGContextSetFillColorWithColor(ctx, [fillColor CGColor]);
@@ -571,26 +594,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 			cell.selectedBackgroundView = [[[TiSelectedCellBackgroundView alloc] initWithFrame:CGRectZero] autorelease];
 		}
 		TiSelectedCellBackgroundView *selectedBGView = (TiSelectedCellBackgroundView*)cell.selectedBackgroundView;
-		int count = [section rowCount];
-		if (count == 1)
-		{
-			selectedBGView.position = TiCellBackgroundViewPositionSingleLine;
-		}
-		else 
-		{
-			if (row == 0)
-			{
-				selectedBGView.position = TiCellBackgroundViewPositionTop;
-			}
-			else if (row == count-1)
-			{
-				selectedBGView.position = TiCellBackgroundViewPositionBottom;
-			}
-			else 
-			{
-				selectedBGView.position = TiCellBackgroundViewPositionMiddle;
-			}
-		}
+		selectedBGView.rowProxy = self;
 		selectedBGView.fillColor = [(TiColor*)selBgColor _color];	
 		selectedBGView.grouped = [[table tableView] style]==UITableViewStyleGrouped;
 	}
