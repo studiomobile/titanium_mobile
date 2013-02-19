@@ -24,17 +24,15 @@ exports.init = function (logger, config, cli) {
 			if (cli.argv.target != 'device') return finished();
 			
 			if (cli.argv['build-only']) {
-				logger.info('Performed build only, skipping installing of the application');
+				logger.info(__('Performed build only, skipping installing of the application'));
 				return finished();
 			}
-			
-			logger.info('Installing application into iTunes');
 			
 			async.parallel([
 				function (next) {
 					var pkgapp = path.join(build.xcodeEnv.path, 'Platforms', 'iPhoneOS.platform', 'Developer', 'usr', 'bin', 'PackageApplication');
 					if (afs.exists(pkgapp)) {
-						exec(pkgapp + ' "' + build.xcodeAppDir + '"', function (err, stdout, stderr) {
+						exec('"' + pkgapp + '" "' + build.xcodeAppDir + '"', function (err, stdout, stderr) {
 							if (err) {
 								logger.warn(__('An error occurred running the iOS Package Application tool'));
 								stderr.split('\n').forEach(logger.debug);
@@ -50,7 +48,8 @@ exports.init = function (logger, config, cli) {
 				var ipa = path.join(path.dirname(build.xcodeAppDir), build.tiapp.name + '.ipa');
 				afs.exists(ipa) || (ipa = build.xcodeAppDir);
 				
-				logger.info(__('Launching iTunes'));
+				logger.info(__('Installing application into iTunes'));
+				
 				exec('open -b com.apple.itunes "' + ipa + '"', function (err, stdout, stderr) {
 					if (err) {
 						return finished(new appc.exception(__('Failed to launch iTunes')));
@@ -59,7 +58,7 @@ exports.init = function (logger, config, cli) {
 					logger.info(__('Initiating iTunes sync'));
 					exec('osascript "' + path.join(build.titaniumIosSdkPath, 'itunes_sync.scpt') + '"', function (err, stdout, stderr) {
 						if (err) {
-							finished(new appc.exception(__('Failed to initiate iTunes sync')));
+							finished(new appc.exception(__('Failed to initiate iTunes sync'), stderr.split('\n').filter(function (line) { return !!line.length; })));
 						} else {
 							finished();
 						}

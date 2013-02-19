@@ -904,6 +904,7 @@ class Builder(object):
 		GEO_PERMISSION = [ 'ACCESS_COARSE_LOCATION', 'ACCESS_FINE_LOCATION']
 		CONTACTS_READ_PERMISSION = ['READ_CONTACTS']
 		CONTACTS_PERMISSION = ['READ_CONTACTS', 'WRITE_CONTACTS']
+		CALENDAR_PERMISSION = ['READ_CALENDAR', 'WRITE_CALENDAR']
 		VIBRATE_PERMISSION = ['VIBRATE']
 		CAMERA_PERMISSION = ['CAMERA']
 		WALLPAPER_PERMISSION = ['SET_WALLPAPER']
@@ -937,6 +938,12 @@ class Builder(object):
 			'Contacts.getAllPeople' : CONTACTS_READ_PERMISSION,
 			'Contacts.getAllGroups' : CONTACTS_READ_PERMISSION,
 			'Contacts.getGroupByID' : CONTACTS_READ_PERMISSION,
+			
+			# CALENDAR
+			'Android.Calendar.getAllAlerts' : CALENDAR_PERMISSION,
+			'Android.Calendar.getAllCalendars' : CALENDAR_PERMISSION,
+			'Android.Calendar.getCalendarById' : CALENDAR_PERMISSION,
+			'Android.Calendar.getSelectableCalendars' : CALENDAR_PERMISSION,
 
 			# WALLPAPER
 			'Media.Android.setSystemWallpaper' : WALLPAPER_PERMISSION,
@@ -1735,6 +1742,11 @@ class Builder(object):
 		pkg_assets_dir = self.assets_dir
 		if self.deploy_type == "test":
 			compile_js = False
+		
+		if compile_js and os.environ.has_key('SKIP_JS_MINIFY'):
+			compile_js = False
+			info("Disabling JavaScript minification")
+		
 		if self.deploy_type == "production" and compile_js:
 			webview_js_files = get_js_referenced_in_html()
 			non_js_assets = os.path.join(self.project_dir, 'bin', 'non-js-assets')
@@ -2142,6 +2154,10 @@ class Builder(object):
 			elif self.tiapp.has_app_property('ti.deploytype'):
 				if self.tiapp.get_app_property('ti.deploytype') == 'production':
 					self.compile_js = True
+
+			if self.compile_js and os.environ.has_key('SKIP_JS_MINIFY'):
+				self.compile_js = False
+				info("Disabling JavaScript minification")
 
 			include_all_ti_modules = self.fastdev 
 			if (self.tiapp.has_app_property('ti.android.include_all_modules')):

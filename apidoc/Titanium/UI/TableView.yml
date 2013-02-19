@@ -49,6 +49,26 @@ description: |
     
     To mitigate this, a `ScrollView` may be used instead of a table view, as demonstrated in the 
     [ScrollView](Titanium.UI.ScrollView), "Scroll View as a Table View", example. 
+
+    #### Known Issues
+
+    There are known issues with the `sections` property and associated methods added in
+    Release 3.0:
+
+    *   On iOS, event listeners do not fire correctly when table view sections are added or
+        updated using the `sections` property or `appendSection`, `insertSectionBefore`,
+        `insertSectionAfter`, or `updateSection` methods. Adding sections using the `data` 
+        property is recommended until this issue is fixed.  
+        ([TIMOB-12616](https://jira.appcelerator.org/browse/TIMOB-12616))
+
+    *   On iOS, the first two arguments to the `updateSection` method are reversed.
+        ([TIMOB-12625](https://jira.appcelerator.org/browse/TIMOB-12625))
+
+    *   On Android, the `sections` property is a read-only property.
+        ([TIMOB-12620](https://jira.appcelerator.org/browse/TIMOB-12620))
+
+    *   On Mobile Web, click events fail to fire after calling the `updateSection` method.
+        ([TIMOB-12630](https://jira.appcelerator.org/browse/TIMOB-12630))
     
     #### Row Editing and Moving Modes (iOS only)
     
@@ -109,15 +129,6 @@ events:
             `true` and the detail button was clicked.
         type: Boolean
         
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: index
         summary: Row index.
         type: Number
@@ -158,15 +169,6 @@ events:
     summary: Fired when the device detects a double click against the view.
     platforms: [mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -182,15 +184,6 @@ events:
       - name: detail
         summary: Indicates whether the delete button was clicked. Always `false` for this event.
         type: Boolean
-        
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
         
       - name: index
         summary: Row index.
@@ -226,15 +219,6 @@ events:
     summary: Fired when the device detects a double tap against this view.
     platforms: [iphone, ipad, mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -271,15 +255,6 @@ events:
       - name: detail
         summary: Boolean to indicate if the right area was clicked. Always `false` for this event.
         type: Boolean
-        
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
         
       - name: index
         summary: Row index.
@@ -458,15 +433,6 @@ events:
         summary: Direction of the swipe, either `left` or `right`.
         type: String
         
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event's endpoint from the `source` view's coordinate system.
         type: Number
@@ -490,15 +456,6 @@ events:
         will fire immediately following the scroll.
     platforms: [iphone, ipad, mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -519,15 +476,6 @@ events:
         will fire immediately following the scroll.
     platforms: [iphone, ipad, mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -542,15 +490,6 @@ events:
         Event coordinates are always relative to the view in which the initial touch occurred
     platforms: [mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -571,15 +510,6 @@ events:
         will fire immediately following the scroll.
     platforms: [iphone, ipad, mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -592,15 +522,6 @@ events:
     summary: Fired when the device detects a two-finger tap against the view.
     platforms: [iphone, ipad, mobileweb]
     properties:
-      - name: globalPoint
-        summary: |
-            Coordinates `x` and `y` describing the location of the event in terms of screen 
-            coordinates.
-        type: Dictionary
-        deprecated:
-            since: "1.8.0"
-        platforms: [iphone, ipad]
-        
       - name: x
         summary: X coordinate of the event from the `source` view's coordinate system.
         type: Number
@@ -683,7 +604,9 @@ methods:
         dictionary specifying the properties for a table section, in which case this `TableView` will 
         create `TableViewSection` objects as needed. 
         
-        On iOS, the row(s) can be inserted with animation by specifying a `properties` parameter.
+        On iOS, the section(s) can be inserted with animation by specifying a `properties` parameter.
+
+        Due to a known issue, TIMOB-12616, this method should not be used for adding sections on iOS.
     parameters:
       - name: section
         summary: Section or section to add to the table.
@@ -765,6 +688,8 @@ methods:
         create `TableViewSection` objects as needed. 
         
         On iOS, the section(s) may be inserted with animation by setting the `animation` parameter.
+
+        Due to a known issue, TIMOB-12616, this method should not be used for adding sections on iOS.
     parameters:
       - name: index
         summary: Index of the section to insert after.
@@ -811,6 +736,8 @@ methods:
         create `TableViewSection` objects as needed. 
         
         On iOS, the section(s) may be inserted with animation by setting the `animation` parameter.
+
+        Due to a known issue, TIMOB-12616, this method should not be used for adding sections on iOS.
     parameters:
       - name: index
         summary: Index of the section to insert before.
@@ -938,7 +865,7 @@ methods:
     since: "2.1.0"
 
   - name: updateRow
-    summary: Updates an existing row, optionally with animation
+    summary: Updates an existing row, optionally with animation.
     parameters:
       - name: index
         summary: Index of the row to update.
@@ -953,7 +880,17 @@ methods:
         type: TableViewAnimationProperties
 
   - name: updateSection
-    summary: Updates an existing section, optionally with animation
+    summary: Updates an existing section, optionally with animation.
+    description: |
+        Known issues:
+
+        *   On iOS and Mobile Web, event listeners do not fire correctly after table view sections are 
+            updated using the `updateSection` methods. 
+            ([TIMOB-12616](https://jira.appcelerator.org/browse/TIMOB-12616),
+            [TIMOB-12630](https://jira.appcelerator.org/browse/TIMOB-12630))
+
+        *   On iOS, the first two arguments to the `updateSection` method are reversed.
+            ([TIMOB-12625](https://jira.appcelerator.org/browse/TIMOB-12625))
     parameters:
       - name: index
         summary: Index of the section to update.
@@ -1141,6 +1078,14 @@ properties:
     default: false
     platforms: [iphone, ipad]
     
+  - name: overScrollMode
+    summary: |
+      One of <Titanium.UI.Android.OVER_SCROLL_ALWAYS>, <Titanium.UI.Android.OVER_SCROLL_IF_CONTENT_SCROLLS>, or <Titanium.UI.Android.OVER_SCROLL_NEVER>. 
+    type: Number
+    default: Titanium.UI.Android.OVER_SCROLL_ALWAYS
+    platforms: [android]
+    since: "3.1.0"
+
   - name: rowHeight
     summary: Default row height for table view rows.
     type: Number
@@ -1175,8 +1120,16 @@ properties:
 
   - name: search
     summary: Search field to use for the table view.
-    type: Titanium.UI.SearchBar
+    type: [Titanium.UI.SearchBar, Titanium.UI.Android.SearchView]
     platforms: [android, iphone, ipad]
+    
+  - name: searchAsChild
+    summary: Determines whether the [SearchBar](Titanium.UI.SearchBar) or [SearchView](Titanium.UI.Android.SearchView) appears as part of the TableView.
+    description: Set to false if the search view will be displayed in the action bar.
+    type: Boolean
+    default: true
+    since: 3.0.2
+    platforms: [android]
     
   - name: searchHidden
     summary: Determines whether the search field is visible.
@@ -1194,6 +1147,11 @@ properties:
 
   - name: sections
     summary: Sections of this table.
+    description: |
+        In Release 3.0, this property is read-only on Android.
+
+        Due to a known issue, TIMOB-12616, the `sections` property should not be used
+        for adding sections on iOS.
     type: Array<Titanium.UI.TableViewSection>
     since: 3.0.0
     platforms: [android, iphone, ipad, mobileweb]
@@ -1267,9 +1225,7 @@ examples:
             sectionVeg.add(Ti.UI.createTableViewRow({ title: 'Potatoes' }));
             
             var table = Ti.UI.createTableView({
-              // Prior to Release 3.0, add sections using the data property:
-              // data: [sectionFruit, sectionVeg]
-              sections: [sectionFruit, sectionVeg]
+              data: [sectionFruit, sectionVeg]
             });
             
             win.add(table);
@@ -1280,8 +1236,10 @@ examples:
             sectionFish.add(Ti.UI.createTableViewRow({ title: 'Haddock' }));
             
             // Prior to Release 3.0, you can only add and remove sections by setting the data property:
-            // table.data = [ sectionFish, sectionFruit, sectionVeg ];
-            table.insertSectionBefore(0, sectionFish);
+            table.data = [ sectionFish, sectionFruit, sectionVeg ];
+            // Due to a known issue, TIMOB-12616, the section access methods and sections
+            // property should not be used on iOS.
+            // table.insertSectionBefore(0, sectionFish);
 
   - title: Table View with Composite Layout
     example: |
