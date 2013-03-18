@@ -203,7 +203,6 @@ TiValueRef KrollGetProperty(TiContextRef jsContext, TiObjectRef object, TiString
 		[name autorelease];		
 
 		id result = [o valueForKey:name];
-		TiObjectRef cachedObject = [o objectForTiString:prop context:jsContext];
 
 		if ([result isKindOfClass:[KrollWrapper class]])
 		{
@@ -215,6 +214,7 @@ TiValueRef KrollGetProperty(TiContextRef jsContext, TiObjectRef object, TiString
 			}
 			else
 			{
+				TiObjectRef cachedObject = [o objectForTiString:prop context:jsContext];
 				TiObjectRef remoteFunction = [(KrollWrapper *)result jsobject];
 				if ((cachedObject != NULL) && (cachedObject != remoteFunction))
 				{
@@ -1227,7 +1227,7 @@ TI_INLINE TiStringRef TiStringCreateWithPointerValue(int value)
 	return result;
 }
 
--(void)storeListener:(KrollCallback *)eventCallback forEvent:(NSString *)eventName
+-(void)storeListener:(id)eventCallbackOrWrapper forEvent:(NSString *)eventName
 {
 	if ((propsObject == NULL) || finalized)
 	{
@@ -1248,7 +1248,12 @@ TI_INLINE TiStringRef TiStringCreateWithPointerValue(int value)
 
 	TiStringRef jsEventTypeString = TiStringCreateWithCFString((CFStringRef) eventName);
 	TiObjectRef jsCallbackArray = (TiObjectRef)TiObjectGetProperty(jsContext, jsEventHash, jsEventTypeString, &exception);
-	TiObjectRef callbackFunction = [eventCallback function];
+	TiObjectRef callbackFunction = nil;
+	if ([eventCallbackOrWrapper isKindOfClass:[KrollCallback class]]) {
+		callbackFunction = [(KrollCallback *)eventCallbackOrWrapper function];
+	} else if ([eventCallbackOrWrapper isKindOfClass:[KrollWrapper class]]) {
+		callbackFunction = [(KrollWrapper *)eventCallbackOrWrapper jsobject];
+	}
 	jsCallbackArray = TiValueToObject(jsContext, jsCallbackArray, &exception);
 
 	if ((jsCallbackArray == NULL) || (TiValueGetType(jsContext,jsCallbackArray) != kTITypeObject))

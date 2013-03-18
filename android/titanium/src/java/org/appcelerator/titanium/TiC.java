@@ -21,6 +21,14 @@ public class TiC
 	public static final String ERROR_PROPERTY_MESSAGE = "message";
 
 	/**
+	 * ERROR_CODE constants are for values of the code property in
+	 * events and callback objects. When you can use a nonzero OS-provided
+	 * error code, use that instead.
+	 */
+	public static final int ERROR_CODE_UNKNOWN = -1;
+	public static final int ERROR_CODE_NO_ERROR = 0;
+
+	/**
 	 * @module.api
 	 */
 	public static final String EVENT_ADDED_TO_TAB = "addedtotab";
@@ -148,6 +156,11 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String EVENT_HEADING = "heading";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String EVENT_ITEM_CLICK = "itemclick";
 
 	/**
 	 * @module.api
@@ -501,6 +514,11 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_ACCESSIBILITY_VALUE = "accessibilityValue";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_ACCESSORY_TYPE = "accessoryType";
 
 	/**
 	 * @module.api
@@ -702,6 +720,11 @@ public class TiC
 	/**
 	 * @module.api
 	 */
+	public static final String PROPERTY_BIND_ID = "bindId";
+	
+	/**
+	 * @module.api
+	 */
 	public static final String PROPERTY_BIRTHDAY = "birthday";
 
 	/**
@@ -757,11 +780,6 @@ public class TiC
 	/**
 	 * @module.api
 	 */
-	public static final String PROPERTY_CAN_SCALE = "canScale";
-
-	/**
-	 * @module.api
-	 */
 	public static final String PROPERTY_CAN_CANCEL_EVENTS = "canCancelEvents";
 
 	/**
@@ -793,10 +811,16 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_CHECKED = "checked";
+
 	/**
 	 * @module.api
 	 */
 	public static final String PROPERTY_CHILD = "child";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_CHILD_TEMPLATES = "childTemplates";
 
 	/**
 	 * @module.api
@@ -906,7 +930,17 @@ public class TiC
 	/**
 	 * @module.api
 	 */
+	public static final String PROPERTY_DECODE_RETRIES = "decodeRetries";
+
+	/**
+	 * @module.api
+	 */
 	public static final String PROPERTY_DEFAULT_IMAGE = "defaultImage";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_DEFAULT_ITEM_TEMPLATE = "defaultItemTemplate";
 
 	/**
 	 * @module.api
@@ -1230,6 +1264,11 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_ITEM_ID = "itemId";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_ITEM_INDEX = "itemIndex";
 
 	/**
 	 * @module.api
@@ -1606,6 +1645,11 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_PREFERRED_PROVIDER = "preferredProvider";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_PROPERTIES = "properties";
 
 	/**
 	 * @module.api
@@ -1738,6 +1782,16 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_SECTION = "section";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_SECTION_INDEX = "sectionIndex";
+
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_SECTIONS = "sections";
 
 	/**
 	 * @module.api
@@ -1913,6 +1967,16 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_TAG = "tag";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_TEMPLATE = "template";
+
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_TEMPLATES = "templates";
 
 	/**
 	 * @module.api
@@ -1928,6 +1992,11 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_TEXT_ALIGN = "textAlign";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_TI_PROXY = "tiProxy";
 
 	/**
 	 * @module.api
