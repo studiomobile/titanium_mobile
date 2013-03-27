@@ -463,7 +463,7 @@
     if (animation == UITableViewRowAnimationNone) {
 		TiThreadPerformOnMainThread(^{
 			[table reloadData];
-		}, NO);
+		}, YES);
         return;
     }
     

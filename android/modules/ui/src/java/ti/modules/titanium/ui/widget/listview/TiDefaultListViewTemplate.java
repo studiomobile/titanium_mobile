@@ -39,11 +39,12 @@ public class TiDefaultListViewTemplate extends TiListViewTemplate {
 
 		//Generate label proxy
 		LabelProxy labelProxy = new LabelProxy();
+		labelProxy.getProperties().put(TiC.PROPERTY_TOUCH_ENABLED, false);
 		labelProxy.setActivity(activity);
 		//Generate properties
-		defaultLabelProperties.put(TiC.PROPERTY_LEFT, "2%");
+		defaultLabelProperties.put(TiC.PROPERTY_LEFT, "2dp");
+		defaultLabelProperties.put(TiC.PROPERTY_WIDTH, "55%");
 		defaultLabelProperties.put(TiC.PROPERTY_TEXT, "label");
-		defaultLabelProperties.put(TiC.PROPERTY_WORD_WRAP, true);
 		//bind the proxy and default propertiess
 		DataItem labelItem = new DataItem(labelProxy, TiC.PROPERTY_TITLE, rootItem);
 		dataItems.put(TiC.PROPERTY_TITLE, labelItem);
@@ -54,11 +55,11 @@ public class TiDefaultListViewTemplate extends TiListViewTemplate {
 		
 		//Generate image proxy
 		ImageViewProxy imageProxy = new ImageViewProxy();
+		imageProxy.getProperties().put(TiC.PROPERTY_TOUCH_ENABLED, false);
 		imageProxy.setActivity(activity);
 		//Generate properties
-		defaultImageProperties.put(TiC.PROPERTY_RIGHT, "0");
-		defaultImageProperties.put(TiC.PROPERTY_HEIGHT, "60sp");
-		defaultImageProperties.put(TiC.PROPERTY_WIDTH, "60sp");
+		defaultImageProperties.put(TiC.PROPERTY_RIGHT, "25dp");
+		defaultImageProperties.put(TiC.PROPERTY_WIDTH, "15%");
 		//bind the proxy and default properties
 		DataItem imageItem = new DataItem (imageProxy, TiC.PROPERTY_IMAGE, rootItem);
 		dataItems.put(TiC.PROPERTY_IMAGE, imageItem);
