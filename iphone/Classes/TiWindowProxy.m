@@ -798,6 +798,8 @@ TiOrientationFlags TiOrientationFlagsFromObject(id args)
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    NSNumber *navBarHidden = [self valueForUndefinedKey:@"navBarHidden"];
+    [controller.navigationController setNavigationBarHidden:[navBarHidden boolValue] animated:YES];
 	[self parentWillShow];
 	TiThreadProcessPendingMainThreadBlocks(0.1, YES, nil);
 }
