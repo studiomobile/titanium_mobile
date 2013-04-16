@@ -952,7 +952,7 @@ build.prototype = {
 		afs.copyDirSyncRecursive(src, dest, opts || {
 			preserve: true,
 			logger: this.logger.debug,
-			ignoreDirs: ['.git','.svn', 'CVS'],
+			ignoreDirs: ['.git', '.svn', 'CVS'],
 			ignoreFiles: ['.gitignore', '.cvsignore']
 		});
 	},
@@ -961,7 +961,7 @@ build.prototype = {
 		afs.copyDirRecursive(src, dest, callback, opts || {
 			preserve: true,
 			logger: this.logger.debug,
-			ignoreDirs: ['.git','.svn', 'CVS'],
+			ignoreDirs: ['.git', '.svn', 'CVS'],
 			ignoreFiles: ['.gitignore', '.cvsignore']
 		});
 	},
@@ -1332,10 +1332,10 @@ build.prototype = {
 			namespace = this.scrubName(this.tiapp.name),
 			copyFileRegExps = [
 				// note: order of regexps matters
+				[/TitaniumViewController/g, namespace + '$ViewController'],
 				[/TitaniumModule/g, namespace + '$Module'],
 				[/Titanium|Appcelerator/g, namespace],
 				[/titanium/g, '_' + namespace.toLowerCase()],
-				[new RegExp(namespace + '(' + namespace + '\\$?Module)', 'g'), '$1'],
 				[/(org|com)\.appcelerator/g, '$1.' + namespace.toLowerCase()],
 				[new RegExp('\\* ' + namespace + ' ' + namespace + ' Mobile', 'g'), '* Appcelerator Titanium Mobile'],
 				[new RegExp('\\* Copyright \\(c\\) \\d{4}(-\\d{4})? by ' + namespace + ', Inc\\.', 'g'), '* Copyright (c) 2009-' + (new Date).getFullYear() + ' by Appcelerator, Inc.'],
@@ -2544,7 +2544,7 @@ build.prototype = {
 							var id = target.path.replace(/\./g, '_');
 							this.compileJsFile(id, target.from);
 							this.jsFilesToPrepare.push(id);
-							cb2();
+							setTimeout(cb2, 0);
 						})(compileTarget, function () {
 							cb();
 						});

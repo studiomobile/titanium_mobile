@@ -202,9 +202,9 @@ public class TableViewRowProxy extends TiViewProxy
 	@Override
 	public boolean fireEvent(String eventName, Object data, boolean bubbles)
 	{
-		if (eventName.equals(TiC.EVENT_CLICK) || eventName.equals(TiC.EVENT_LONGCLICK)) {
-			// Inject row click data for events coming from row children.
-			TableViewProxy table = getTable();
+		// Inject row click data for events coming from row children.
+		TableViewProxy table = getTable();
+		if (tableViewItem != null) {
 			Item item = tableViewItem.getRowData();
 			if (table != null && item != null && data instanceof HashMap) {
 				// The data object may already be in use by the runtime thread
@@ -215,6 +215,7 @@ public class TableViewRowProxy extends TiViewProxy
 				data = dataCopy;
 			}
 		}
+
 		return super.fireEvent(eventName, data, bubbles);
 	}
 
