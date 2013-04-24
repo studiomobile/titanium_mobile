@@ -172,7 +172,7 @@ void ModifyScrollViewForKeyboardHeightAndContentHeightWithResponderRect(UIScroll
  @param image The string referring the image.
  @return The loaded image.
  */
--(UIImage*)loadImage:(id)image;
+-(UIImage*)loadBackgroundImage:(id)image;
 
 -(id)proxyValueForKey:(NSString *)key;
 -(void)readProxyValuesWithKeys:(id<NSFastEnumeration>)keys;

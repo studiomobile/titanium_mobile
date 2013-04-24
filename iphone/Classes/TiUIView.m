@@ -285,7 +285,7 @@ DEFINE_EXCEPTIONS
 	[self sanitycheckListeners];
 }
 
--(UIImage*)loadImage:(id)image 
+-(UIImage*)loadBackgroundImage:(id)image 
 {
 	if (image==nil) return nil;
 	NSURL *url = [TiUtils toURL:image proxy:proxy];

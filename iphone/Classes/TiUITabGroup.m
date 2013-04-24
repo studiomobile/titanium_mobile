@@ -320,7 +320,7 @@ DEFINE_EXCEPTIONS
 		NSLog(@"[WARN] tabsBackgroundImage is only supported in iOS 5 or above.");
 		return;
 	}
-	controller.tabBar.backgroundImage = [self loadImage:value];
+	controller.tabBar.backgroundImage = [self loadBackgroundImage:value];
 }
 
 -(void)setActiveTabBackgroundImage_:(id)value
@@ -329,7 +329,7 @@ DEFINE_EXCEPTIONS
 		NSLog(@"[WARN] activeTabBackgroundImage is only supported in iOS 5 or above.");
 		return;
 	}
-	controller.tabBar.selectionIndicatorImage = [self loadImage:value];
+	controller.tabBar.selectionIndicatorImage = [TiUtils image:value proxy:self.proxy];
 }
 
 -(void)setShadowImage_:(id)value
@@ -339,7 +339,7 @@ DEFINE_EXCEPTIONS
 		return;
 	}
 	//Because we still support XCode 4.3, we cannot use the shadowImage property
-	[controller.tabBar setShadowImage:[self loadImage:value]];
+	[controller.tabBar setShadowImage:[self loadBackgroundImage:value]];
 }
 
 -(void) setActiveTabIconTint_:(id)value

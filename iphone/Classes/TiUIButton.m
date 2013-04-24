@@ -234,24 +234,24 @@
 {
 	[backgroundImageCache release];
 	RELEASE_TO_NIL(backgroundImageUnstretchedCache);
-	backgroundImageCache = [[self loadImage:value] retain];
+	backgroundImageCache = [[self loadBackgroundImage:value] retain];
     self.backgroundImage = value;
 	[self updateBackgroundImage];
 }
 
 -(void)setBackgroundSelectedImage_:(id)value
 {
-	[[self button] setBackgroundImage:[self loadImage:value] forState:UIControlStateHighlighted];
+	[[self button] setBackgroundImage:[self loadBackgroundImage:value] forState:UIControlStateHighlighted];
 }
 
 -(void)setBackgroundDisabledImage_:(id)value
 {
-	[[self button] setBackgroundImage:[self loadImage:value] forState:UIControlStateDisabled];
+	[[self button] setBackgroundImage:[self loadBackgroundImage:value] forState:UIControlStateDisabled];
 }
 
 -(void)setBackgroundFocusedImage_:(id)value
 {
-	[[self button] setBackgroundImage:[self loadImage:value] forState:UIControlStateSelected];
+	[[self button] setBackgroundImage:[self loadBackgroundImage:value] forState:UIControlStateSelected];
 }
 
 -(void)setBackgroundColor_:(id)value

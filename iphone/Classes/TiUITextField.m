@@ -352,13 +352,13 @@
 		// need to force into no border or it won't render
 		[tf setBorderStyle:UITextBorderStyleNone];
 	}
-	[tf setBackground:[self loadImage:image]];
+	[tf setBackground:[self loadBackgroundImage:image]];
     self.backgroundImage = image;
 }
 
 -(void)setBackgroundDisabledImage_:(id)image
 {
-	[[self textWidgetView] setDisabledBackground:[self loadImage:image]];
+	[[self textWidgetView] setDisabledBackground:[self loadBackgroundImage:image]];
 }
 
 -(void)setHintText_:(id)value
