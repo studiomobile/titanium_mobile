@@ -8,6 +8,7 @@ package ti.modules.titanium.ui;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.TiContext;
@@ -24,7 +25,8 @@ import android.app.Activity;
 propertyAccessors = {
 	TiC.PROPERTY_TITLE,
 	TiC.PROPERTY_TITLEID,
-	TiC.PROPERTY_ICON
+	TiC.PROPERTY_ICON,
+	TiC.PROPERTY_TAB_VIEW
 })
 public class TabProxy extends TiViewProxy
 {
@@ -35,6 +37,7 @@ public class TabProxy extends TiViewProxy
 	private TiWindowProxy window;
 	private boolean windowOpened = false;
 	private int windowId;
+	private TiViewProxy tabView;
 
 	public TabProxy()
 	{

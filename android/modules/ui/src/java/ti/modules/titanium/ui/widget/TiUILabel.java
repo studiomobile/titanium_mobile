@@ -96,9 +96,12 @@ public class TiUILabel extends TiUIView
 
 		if (d.containsKey(TiC.PROPERTY_COLOR)) {
 			Object color = d.get(TiC.PROPERTY_COLOR);
+			Log.i(TAG, "Setting label color: " + color, Log.DEBUG_MODE);
 			if (color == null) {
 				tv.setTextColor(defaultColor);
 			} else {
+				Log.i(TAG, "Color: " + TiConvert.toColor(d, TiC.PROPERTY_COLOR), Log.DEBUG_MODE);
+				
 				tv.setTextColor(TiConvert.toColor(d, TiC.PROPERTY_COLOR));
 			}
 		}

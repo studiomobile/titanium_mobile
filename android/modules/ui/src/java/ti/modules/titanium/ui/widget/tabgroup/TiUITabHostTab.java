@@ -12,6 +12,7 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.util.TiUIHelper;
+import org.appcelerator.titanium.proxy.TiViewProxy;
 
 import ti.modules.titanium.ui.TabProxy;
 import android.graphics.drawable.Drawable;
@@ -37,12 +38,17 @@ public class TiUITabHostTab extends TiUIAbstractTab {
 		indicatorView.setBackgroundColor(color);
 	}
 
-	void setupTabSpec(TabSpec spec) {
+	void setupTabSpec(TabSpec spec) {		
 		KrollDict properties = proxy.getProperties();
-
-		String title = properties.optString(TiC.PROPERTY_TITLE, "");
-		Object icon = properties.get(TiC.PROPERTY_ICON);
-		spec.setIndicator(title, icon != null ? TiUIHelper.getResourceDrawable(icon) : null);
+		TabProxy tabProxy = (TabProxy)proxy;
+		TiViewProxy tabView = (TiViewProxy)tabProxy.getProperty(TiC.PROPERTY_TAB_VIEW);
+		if (tabView != null) {
+			spec.setIndicator(tabView.getOrCreateView().getNativeView());
+		} else {
+			String title = properties.optString(TiC.PROPERTY_TITLE, "");
+			Object icon = properties.get(TiC.PROPERTY_ICON);
+			spec.setIndicator(title, icon != null ? TiUIHelper.getResourceDrawable(icon) : null);			
+		}
 	}
 
 	void setIndicatorView(View indicatorView) {

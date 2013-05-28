@@ -140,6 +140,15 @@ public class TiConvert
 		return TiColorHelper.parseColor(value);
 	}
 
+	public static int toColor(Object value)
+	{
+		if (value instanceof Number) {
+			return TiApplication.getInstance().getResources().getColor(((Number)value).intValue());
+		} else {
+			return toColor(TiConvert.toString(value));
+		}
+	}
+
 	/**
 	 * This is a wrapper method. 
 	 * Refer to {@link TiColorHelper#parseColor(String)} for more details.
@@ -150,7 +159,7 @@ public class TiConvert
 	 */
 	public static int toColor(HashMap<String, Object> hashMap, String key)
 	{
-		return toColor(TiConvert.toString(hashMap.get(key)));
+		return toColor(hashMap.get(key));
 	}
 
 	public static ColorDrawable toColorDrawable(String value)

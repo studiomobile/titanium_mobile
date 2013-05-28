@@ -1997,6 +1997,11 @@ public class TiC
 	 * @module.api
 	 */
 	public static final String PROPERTY_TABS_BACKGROUND_SELECTED_COLOR = "tabsBackgroundSelectedColor";
+	
+	/**
+	 * @module.api
+	 */
+	public static final String PROPERTY_TAB_VIEW = "tabView";
 
 	/**
 	 * @module.api
@@ -2256,4 +2261,6 @@ public class TiC
 	public static final String URL_APP_SCHEME = "app";
 	public static final String URL_APP_JS = "app://app.js";
 	public static final String URL_ANDROID_ASSET_RESOURCES = "file:///android_asset/Resources/";
+
+
 }

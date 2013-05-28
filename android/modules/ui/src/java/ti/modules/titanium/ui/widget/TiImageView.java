@@ -163,6 +163,10 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 		imageView.setImageBitmap(bitmap);
 	}
 
+	public void setImageDrawable(Drawable drawable) {
+		imageView.setImageDrawable(drawable);
+	}
+
 	public void setOnClickListener(OnClickListener clickListener)
 	{
 		this.clickListener = clickListener;

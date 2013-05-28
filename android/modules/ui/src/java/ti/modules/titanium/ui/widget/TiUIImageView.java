@@ -683,7 +683,34 @@ public class TiUIImageView extends TiUIView implements OnLifecycleEvent, Handler
 		}
 
 		if (imageSources.size() == 1) {
+			//Suggestion from andrey@studiomobile.ru
+			//1. Store TiDrawableReference in mMemoryCache instead of bitmaps. mMemoryCache could be HashSet in this case.
+			//2. Load image using TiDrawableReference methods. This would provide clean responsibilities separation. 
+			// TiDrawableReference holds reference to resource and provide it upon request in an asynchronious manner.
+			//Example: (just to illustrate the idea)
+			// TiDrawableReference imageref = imageSources.get(0);
+			// imageref.load(new TiLoadListener(){
+			// 			public void loadFinished(Drawable d) {
+			// 				view.setImageDrawable(d)
+			// 			}
+			// 			public void loadFailed(Drawable d) {
+			// 				view.setImageDrawable(defaultImageSource) //or signal error in any other way
+			// 			}
+			// })
+			// Going further TiDrawableReference can be refactred into class cluster (https://developer.apple.com/library/mac/#documentation/General/Conceptual/DevPedia-CocoaCore/ClassCluster.html)
+			// This would save a bit of memory since each drawable would hold only minimal amount of data.
 			TiDrawableReference imageref = imageSources.get(0);
+			if (imageref.isTypeResourceId()) {
+				TiImageView view = getView();
+				if (view != null) {
+					view.setImageDrawable(imageref.getDrawable());
+					if (!firedLoad) {
+						fireLoad(TiC.PROPERTY_IMAGE);
+						firedLoad = true;
+					}
+				}
+				return;
+			}
 
 			// Check if the image is cached in memory
 			int hash = imageref.hashCode();
