@@ -534,6 +534,9 @@
 		79BCCE9C175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
 		79BCCE9D175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
 		79BCCE9E175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
+		79BCCEA617553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */; };
+		79BCCEA717553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */; };
+		79BCCEA817553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */; };
 		8406A97616CED43D00EB62FB /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
 		8406A97716CED45400EB62FB /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
 		840A9D4916CEBF24003AA591 /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
@@ -1438,6 +1441,8 @@
 		5081CEF715F8100E00C881D8 /* TiExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiExceptionHandler.m; sourceTree = "<group>"; };
 		79BCCE9A175525FC00288CD7 /* TiUIScrollableView+SMExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiUIScrollableView+SMExt.h"; sourceTree = "<group>"; };
 		79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TiUIScrollableView+SMExt.m"; sourceTree = "<group>"; };
+		79BCCEA417553FDB00288CD7 /* TiUITabProxy+SMExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiUITabProxy+SMExt.h"; sourceTree = "<group>"; };
+		79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TiUITabProxy+SMExt.m"; sourceTree = "<group>"; };
 		840A9D4716CEBF24003AA591 /* TiMapCustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiMapCustomAnnotationView.h; sourceTree = "<group>"; };
 		840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiMapCustomAnnotationView.m; sourceTree = "<group>"; };
 		844E1F7C14883A3700F5424C /* TiDOMValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiDOMValidator.h; sourceTree = "<group>"; };
@@ -2880,6 +2885,8 @@
 			children = (
 				79BCCE9A175525FC00288CD7 /* TiUIScrollableView+SMExt.h */,
 				79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */,
+				79BCCEA417553FDB00288CD7 /* TiUITabProxy+SMExt.h */,
+				79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */,
 			);
 			name = SMExt;
 			sourceTree = "<group>";
@@ -3472,6 +3479,7 @@
 				502A68EB16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870217417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
 				79BCCE9C175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
+				79BCCEA617553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3756,6 +3764,7 @@
 				502A68EC16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870317417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
 				79BCCE9D175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
+				79BCCEA717553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4040,6 +4049,7 @@
 				502A68ED16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870417417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
 				79BCCE9E175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
+				79BCCEA817553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

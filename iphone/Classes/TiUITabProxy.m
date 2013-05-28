@@ -1,8 +1,10 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2010 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2013 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
+ * 
+ * WARNING: This is generated code. Modify at your own risk and without support.
  */
 #ifdef USE_TI_UITAB
  
@@ -16,7 +18,7 @@
 #import "ImageLoader.h"
 #import "TiApp.h"
 
-
+extern void updateTitleTextAttributes(TiUITabProxy *tab, UIBarItem *item);
 //NOTE: this proxy is a little different than normal Proxy/View pattern
 //since it's not really backed by a view in the normal way.  It's given
 //a root level window proxy (and view) that are passed as the root controller
@@ -471,6 +473,7 @@
 	}
 	
 	[ourItem setBadgeValue:badgeValue];
+    updateTitleTextAttributes(self, ourItem);
 }
 
 -(void)setTitle:(id)title
