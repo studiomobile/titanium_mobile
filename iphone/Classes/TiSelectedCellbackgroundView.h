@@ -16,16 +16,18 @@ typedef enum
 	TiCellBackgroundViewPositionSingleLine
 } TiCellBackgroundViewPosition;
 
-
+@class TiUITableViewRowProxy;
 @interface TiSelectedCellBackgroundView : UIView
 {
-    TiCellBackgroundViewPosition position;
+    TiUITableViewRowProxy *rowProxy;
 	UIColor *fillColor;
 	BOOL grouped;
+	TiCellBackgroundViewPosition position;
 }
-@property(nonatomic) TiCellBackgroundViewPosition position;
+@property(nonatomic, assign) TiUITableViewRowProxy *rowProxy;
 @property(nonatomic,retain) UIColor *fillColor;
 @property(nonatomic) BOOL grouped;
+@property(nonatomic) TiCellBackgroundViewPosition position;
 
 @end
 
