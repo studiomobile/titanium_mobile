@@ -531,6 +531,9 @@
 		5081CEFA15F8100E00C881D8 /* TiExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5081CEF715F8100E00C881D8 /* TiExceptionHandler.m */; };
 		508DB8FC16D431F000F9910E /* libti_ios_profiler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 502E9D2316CAFB9D00C1BD26 /* libti_ios_profiler.a */; };
 		508DB8FD16D431F100F9910E /* libti_ios_profiler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 502E9D2316CAFB9D00C1BD26 /* libti_ios_profiler.a */; };
+		79BCCE9C175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
+		79BCCE9D175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
+		79BCCE9E175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
 		8406A97616CED43D00EB62FB /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
 		8406A97716CED45400EB62FB /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
 		840A9D4916CEBF24003AA591 /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
@@ -1433,6 +1436,8 @@
 		502E9D2316CAFB9D00C1BD26 /* libti_ios_profiler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libti_ios_profiler.a; path = ../lib/libti_ios_profiler.a; sourceTree = "<group>"; };
 		5081CEF615F8100E00C881D8 /* TiExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiExceptionHandler.h; sourceTree = "<group>"; };
 		5081CEF715F8100E00C881D8 /* TiExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiExceptionHandler.m; sourceTree = "<group>"; };
+		79BCCE9A175525FC00288CD7 /* TiUIScrollableView+SMExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiUIScrollableView+SMExt.h"; sourceTree = "<group>"; };
+		79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TiUIScrollableView+SMExt.m"; sourceTree = "<group>"; };
 		840A9D4716CEBF24003AA591 /* TiMapCustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiMapCustomAnnotationView.h; sourceTree = "<group>"; };
 		840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiMapCustomAnnotationView.m; sourceTree = "<group>"; };
 		844E1F7C14883A3700F5424C /* TiDOMValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiDOMValidator.h; sourceTree = "<group>"; };
@@ -1732,6 +1737,7 @@
 		24CA8902111160BE0084E2DE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				79BCCE99175525DB00288CD7 /* SMExt */,
 				24EB07D1111D420D001DC2D1 /* DOM */,
 				24CA8A09111161D60084E2DE /* Modules */,
 				24CA8A0A111161DC0084E2DE /* Utils */,
@@ -2869,6 +2875,15 @@
 			name = ListView;
 			sourceTree = "<group>";
 		};
+		79BCCE99175525DB00288CD7 /* SMExt */ = {
+			isa = PBXGroup;
+			children = (
+				79BCCE9A175525FC00288CD7 /* TiUIScrollableView+SMExt.h */,
+				79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */,
+			);
+			name = SMExt;
+			sourceTree = "<group>";
+		};
 		B43663DA11138AB300782262 /* Scrollable View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3456,6 +3471,7 @@
 				502A68E616EEAA7500661EF6 /* TiUIListViewProxy.m in Sources */,
 				502A68EB16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870217417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
+				79BCCE9C175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3739,6 +3755,7 @@
 				502A68E716EEAA7500661EF6 /* TiUIListViewProxy.m in Sources */,
 				502A68EC16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870317417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
+				79BCCE9D175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4022,6 +4039,7 @@
 				502A68E816EEAA7500661EF6 /* TiUIListViewProxy.m in Sources */,
 				502A68ED16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870417417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
+				79BCCE9E175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
