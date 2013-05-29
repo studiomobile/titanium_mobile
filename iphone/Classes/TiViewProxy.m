@@ -14,6 +14,7 @@
 #import "TiStylesheet.h"
 #import "TiLocale.h"
 #import "TiUIView.h"
+#import "TiExceptionHandler.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <libkern/OSAtomic.h>
@@ -135,6 +136,41 @@
     return (context == myContext);
 }
 
+-(void)addToView:(id)arg {
+    [arg setParent:self];
+    //Turn on clipping because I have children
+    [self view].clipsToBounds = YES;
+
+    [self contentsWillChange];
+    if(parentVisible && !hidden)
+    {
+        [arg parentWillShow];
+    }
+    
+    //If layout is non absolute push this into the layout queue
+    //else just layout the child with current bounds
+    if (!TiLayoutRuleIsAbsolute(layoutProperties.layoutStyle) ) {
+        [self contentsWillChange];
+    }
+    else {
+        [self layoutChild:arg optimize:NO withMeasuredBounds:[[self view] bounds]];
+    }
+}
+- (void)add:(id)arg toList:(NSMutableArray**)outList {
+    pthread_rwlock_wrlock(&childrenLock);
+    NSMutableArray *list = *outList;
+    if (list == nil)
+    {
+        list = *outList = [[NSMutableArray alloc] initWithObjects:arg,nil];
+    }
+    else
+    {
+        [list addObject:arg];
+    }
+    pthread_rwlock_unlock(&childrenLock);
+    [arg setParent:self];
+}
+
 -(void)add:(id)arg
 {
 	// allow either an array of arrays or an array of single proxy
@@ -149,54 +185,21 @@
 	
 	if ([NSThread isMainThread])
 	{
-		pthread_rwlock_wrlock(&childrenLock);
-		if (children==nil)
-		{
-			children = [[NSMutableArray alloc] initWithObjects:arg,nil];
-		}		
-		else 
-		{
-			[children addObject:arg];
-		}
-        //Turn on clipping because I have children
-        [self view].clipsToBounds = YES;
-        
-		pthread_rwlock_unlock(&childrenLock);
-		[arg setParent:self];
-		[self contentsWillChange];
-		if(parentVisible && !hidden)
-		{
-			[arg parentWillShow];
-		}
-		
-		//If layout is non absolute push this into the layout queue
-		//else just layout the child with current bounds
-		if (!TiLayoutRuleIsAbsolute(layoutProperties.layoutStyle) ) {
-			[self contentsWillChange];
-		}
-		else {
-			[self layoutChild:arg optimize:NO withMeasuredBounds:[[self view] bounds]];
-		}
+		[self add:arg toList:&children];
+        [self addToView:arg];
 	}
 	else
 	{
 		[self rememberProxy:arg];
 		if (windowOpened)
 		{
-			TiThreadPerformOnMainThread(^{[self add:arg];}, NO);
-			return;
+            [self add:arg toList:&children];
+			TiThreadPerformOnMainThread(^{[self addToView:arg];}, NO);
 		}
-		pthread_rwlock_wrlock(&childrenLock);
-		if (pendingAdds==nil)
-		{
-			pendingAdds = [[NSMutableArray arrayWithObject:arg] retain];
-		}
-		else 
-		{
-			[pendingAdds addObject:arg];
-		}
-		pthread_rwlock_unlock(&childrenLock);
-		[arg setParent:self];
+        else
+        {
+            [self add:arg toList:&pendingAdds];
+        }
 	}
 }
 
