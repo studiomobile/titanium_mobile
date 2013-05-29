@@ -106,11 +106,11 @@ TiOrientationFlags TiOrientationFlagsFromObject(id args)
 {
 	[self releaseController];
 
-    [tab release];
-    [closeView release];
-    [animatedOver release];
-    [openAnimation release];
-    [closeAnimation release];
+    RELEASE_TO_NIL(tab)
+    RELEASE_TO_NIL(closeView);
+    RELEASE_TO_NIL(animatedOver);
+    RELEASE_TO_NIL(openAnimation);
+    RELEASE_TO_NIL(closeAnimation);
 	
 	[super _destroy];
 }
