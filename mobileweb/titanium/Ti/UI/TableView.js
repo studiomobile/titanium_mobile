@@ -8,20 +8,20 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 
 		// The amount of deceleration (in pixels/ms^2)
 		deceleration = 0.001,
-		eventFilter = /(click|singletap|longpress)/;
+		eventFilter = /^click|singletap|longpress$/;
 
 	return declare('Ti.UI.TableView', KineticScrollView, {
 
 		constructor: function() {
-
-			var contentContainer;
-			this._initKineticScrollView(contentContainer = UI.createView({
+			var contentContainer = UI.createView({
 				width: UI.INHERIT,
 				height: UI.SIZE,
 				left: 0,
 				top: 0,
 				layout: UI._LAYOUT_CONSTRAINING_VERTICAL
-			}), 'vertical', 'vertical', 1);
+			});
+
+			this._initKineticScrollView(contentContainer, 'vertical', 'vertical', 1);
 
 			contentContainer._add(this._header = UI.createView({
 				height: UI.SIZE,
@@ -39,8 +39,8 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 				layout: UI._LAYOUT_CONSTRAINING_VERTICAL
 			}));
 
+			this.__values__.constants.sections = [];
 			this.data = [];
-			this.constants.__values__.sections = [];
 		},
 
 		_handleMouseWheel: function() {
@@ -328,10 +328,8 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 		},
 
 		constants: {
-			sectionCount: {
-				get: function() {
-					return this.sections.length;
-				}
+			sectionCount: function() {
+				return this.sections.length;
 			},
 			sections: void 0
 		},
@@ -346,7 +344,7 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 
 						// Remove all of the previous sections
 						this._sections._removeAllChildren();
-						this.constants.__values__.sections = [];
+						this.__values__.constants.sections = [];
 						this._currentSection = void 0;
 
 						// Convert any object literals to TableViewRow instances
@@ -381,6 +379,7 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 					}
 				}
 			},
+
 			footerTitle: {
 				set: function(value, oldValue) {
 					if (oldValue != value) {
@@ -390,6 +389,7 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 					return value;
 				}
 			},
+
 			footerView: {
 				set: function(value, oldValue) {
 					if (oldValue != value) {
@@ -399,6 +399,7 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 					return value;
 				}
 			},
+
 			headerTitle: {
 				set: function(value, oldValue) {
 					if (oldValue != value) {
@@ -409,6 +410,7 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 					return value;
 				}
 			},
+
 			headerView: {
 				set: function(value, oldValue) {
 					if (oldValue != value) {
@@ -418,12 +420,15 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 					return value;
 				}
 			},
+
 			maxRowHeight: {
 				post: '_refreshSections'
 			},
+
 			minRowHeight: {
 				post: '_refreshSections'
 			},
+
 			rowHeight: {
 				post: '_refreshSections',
 				value: '50px'
@@ -433,6 +438,7 @@ define(['Ti/_/declare', 'Ti/_/UI/KineticScrollView', 'Ti/_/style', 'Ti/_/lang', 
 				post: '_refreshSections',
 				value: 'lightGrey'
 			},
+
 			separatorStyle: {
 				post: '_refreshSections',
 				value: TableViewSeparatorStyle.SINGLE_LINE

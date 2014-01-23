@@ -368,9 +368,6 @@ public class TiTableView extends FrameLayout
 				if (tvItem == null) {
 					return false;
 				}
-				if (TiTableView.this.proxy.hasProperty(TiC.PROPERTY_HEADER_VIEW)) {
-					position -= 1;
-				}
 				return rowClicked(tvItem, position, true);
 			}
 		});
@@ -404,9 +401,13 @@ public class TiTableView extends FrameLayout
 		}
 	}
 	
-	public Item getItemAtPosition(int position) {
+	public Item getItemAtPosition(int position)
+	{
 		if (proxy.hasProperty(TiC.PROPERTY_HEADER_VIEW)) {
 			position -= 1;
+		}
+		if (position == -1 || position == adapter.getCount()) {
+			return null;
 		}
 		return viewModel.getViewModel().get(adapter.index.get(position));
 	}
@@ -433,15 +434,17 @@ public class TiTableView extends FrameLayout
 		}
 		event.put(TiC.EVENT_PROPERTY_SEARCH_MODE, adapter.isFiltered());
 
-		if(item.proxy != null && item.proxy instanceof TableViewRowProxy) {
+		boolean longClickFired = false;
+		if (item.proxy != null && item.proxy instanceof TableViewRowProxy) {
 			TableViewRowProxy rp = (TableViewRowProxy) item.proxy;
 			event.put(TiC.EVENT_PROPERTY_SOURCE, rp);
 			// The event will bubble up to the parent.
 			if (rp.hierarchyHasListener(eventName)) {
 				rp.fireEvent(eventName, event);
+				longClickFired = true;
 			}
 		}
-		if (longClick) {
+		if (longClick && !longClickFired) {
 			return itemLongClickListener.onLongClick(event);
 		} else {
 			return false; // standard (not-long) click handling has no return value.
@@ -463,7 +466,8 @@ public class TiTableView extends FrameLayout
 		View nativeView = tiView.getOuterView();
 		TiCompositeLayout.LayoutParams params = tiView.getLayoutParams();
 
-		int width = AbsListView.LayoutParams.WRAP_CONTENT;
+		// Set width to MATCH_PARENT to be consistent with iPhone
+		int width = AbsListView.LayoutParams.MATCH_PARENT;
 		int height = AbsListView.LayoutParams.WRAP_CONTENT;
 		if (params.sizeOrFillHeightEnabled) {
 			if (params.autoFillsHeight) {
@@ -472,13 +476,7 @@ public class TiTableView extends FrameLayout
 		} else if (params.optionHeight != null) {
 			height = params.optionHeight.getAsPixels(listView);
 		}
-		if (params.sizeOrFillWidthEnabled) {
-			if (params.autoFillsWidth) {
-				width = AbsListView.LayoutParams.MATCH_PARENT;
-			}
-		} else if (params.optionWidth != null) {
-			width = params.optionWidth.getAsPixels(listView);
-		}
+		
 		AbsListView.LayoutParams p = new AbsListView.LayoutParams(width, height);
 		nativeView.setLayoutParams(p);
 		return tiView;

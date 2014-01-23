@@ -102,15 +102,19 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 			@Override
 			public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy)
 			{
-				if (zoomControls.getVisibility() == View.VISIBLE) {
-					changeMatrix.postTranslate(-dx, -dy);
-					imageView.setImageMatrix(getViewMatrix());
-					requestLayout();
-					scheduleControlTimeout();
-					return true;
-				} else {
-					return false;
+				boolean retValue = false;
+				// Allow scrolling only if the image is zoomed in
+				if (zoomControls.getVisibility() == View.VISIBLE && scaleFactor > 1) {
+					// check if image scroll beyond its borders
+					if (!checkImageScrollBeyondBorders(dx, dy)) {
+						changeMatrix.postTranslate(-dx, -dy);
+						imageView.setImageMatrix(getViewMatrix());
+						requestLayout();
+						scheduleControlTimeout();
+						retValue = true;
+					}
 				}
+				return retValue;
 			}
 
 			@Override
@@ -358,15 +362,32 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 		int maxWidth = 0;
 		int maxHeight = 0;
 
-//		if (DBG) {
-//			int w = MeasureSpec.getSize(widthMeasureSpec);
-//			int wm = MeasureSpec.getMode(widthMeasureSpec);
-//			int h = MeasureSpec.getSize(heightMeasureSpec);
-//			int hm = MeasureSpec.getMode(heightMeasureSpec);
-//
-//			Log.i(LCAT, "w: " + w + " wm: " + wm + " h: " + h + " hm: " + hm);
-//		}
+		// If height or width is not defined and we have an image, we need to set the height/width properly
+		// so that it doesn't get the content height/width
+		if (!viewWidthDefined || !viewHeightDefined) {
+			Drawable d = imageView.getDrawable();
 
+			if (d != null) {
+				float aspectRatio = 1;
+				int w = MeasureSpec.getSize(widthMeasureSpec);
+				int h = MeasureSpec.getSize(heightMeasureSpec);
+
+				int ih = d.getIntrinsicHeight();
+				int iw = d.getIntrinsicWidth();
+				if (ih != 0 && iw != 0) {
+					aspectRatio = ih / iw;
+				}
+				if (viewWidthDefined) {
+					maxWidth = w;
+					maxHeight = Math.round(w * aspectRatio);
+				}
+				if (viewHeightDefined) {
+					maxHeight = h;
+					maxWidth = Math.round(h / aspectRatio);
+				}
+			}
+		}
+		
 		// TODO padding and margins
 
 		measureChild(imageView, widthMeasureSpec, heightMeasureSpec);
@@ -448,5 +469,23 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 	{
 		this.orientation = orientation;
 		updateScaleType();
+	}
+	
+	private boolean checkImageScrollBeyondBorders(float dx, float dy)
+	{
+		float[] matrixValues = new float[9];
+		Matrix m = new Matrix(changeMatrix);
+		// Apply the translation
+		m.postTranslate(-dx, -dy);
+		m.getValues(matrixValues);
+		// Image can move only the extra width or height that is available
+		// after scaling from the original width or height
+		float scaledAdditionalHeight = imageView.getHeight() * (matrixValues[4] - 1);
+		float scaledAdditionalWidth = imageView.getWidth() * (matrixValues[0] - 1);
+		if (matrixValues[5] > -scaledAdditionalHeight && matrixValues[5] < 0 && matrixValues[2] > -scaledAdditionalWidth
+			&& matrixValues[2] < 0) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -19,6 +19,9 @@ from xml.dom.minidom import parseString
 from tilogger import *
 from datetime import datetime, timedelta
 
+reload(sys) # this is required to prevent the following error: "AttributeError: 'module' object has no attribute 'setdefaultencoding'"
+sys.setdefaultencoding("utf_8") # Fix umlaut issues
+
 template_dir = os.path.abspath(os.path.dirname(sys._getframe(0).f_code.co_filename))
 top_support_dir = os.path.dirname(template_dir)
 sys.path.append(top_support_dir)
@@ -37,6 +40,8 @@ import localecompiler
 import fastdev
 import requireIndex
 
+resourceFiles = ['strings.xml', 'attrs.xml', 'styles.xml', 'bools.xml', 'colors.xml',
+				'dimens.xml', 'ids.xml', 'integers.xml', 'arrays.xml']
 ignoreFiles = ['.gitignore', '.cvsignore', '.DS_Store'];
 ignoreDirs = ['.git','.svn','_svn', 'CVS'];
 android_avd_hw = {'hw.camera': 'yes', 'hw.gps':'yes'}
@@ -272,8 +277,7 @@ def copy_all(source_folder, dest_folder, mergeXMLResources=False, ignore_dirs=[]
 			# Merge the xml resource files in res/values/ if there are multiple files with the same name.
 			# (TIMOB-12663)
 			#
-			elif mergeXMLResources and os.path.isfile(to_) and f in ['strings.xml', 'attrs.xml', 'styles.xml',
-				'bools.xml', 'colors.xml', 'dimens.xml', 'ids.xml', 'integers.xml', 'arrays.xml']:
+			elif mergeXMLResources and os.path.isfile(to_) and f in resourceFiles:
 				sfile = open(from_, 'r')
 				dfile = open(to_, 'r')
 				scontent = sfile.read()
@@ -281,7 +285,7 @@ def copy_all(source_folder, dest_folder, mergeXMLResources=False, ignore_dirs=[]
 				sfile.close()
 				dfile.close()
 				sindex = scontent.find('</resources>')
-				dindex = dcontent.find('<resources>') + 11
+				dindex = dcontent.find('>', dcontent.find('<resources')) + 1
 				content_to_write = scontent[:sindex] + dcontent[dindex:]
 				wfile = open(to_, 'w')
 				wfile.write(content_to_write)
@@ -329,6 +333,37 @@ def resource_drawable_folder(path):
 			return 'drawable-%sdpi' % folder[0]
 		else:
 			return 'drawable-%s' % folder.replace('res-', '')
+
+def remove_duplicate_nodes_in_res_file(full_path, node_names_to_check):
+	f = open(full_path, 'r')
+	contents = f.read()
+	f.close()
+	doc = parseString(contents)
+	resources_node = doc.getElementsByTagName('resources')[0]
+
+	made_change = False
+	for node_name in node_names_to_check:
+		nodes = doc.getElementsByTagName(node_name)
+		if len(nodes) == 0:
+			continue
+		name_list = [] #keeps track of the name attribute for the node we are checking
+		for node in nodes:
+			# Only check for the children of the "resources" node
+			if node.parentNode != resources_node:
+				continue
+			name = node.getAttribute('name')
+			# Remove the node with the duplicate names
+			if name in name_list:
+				resources_node.removeChild(node)
+				made_change = True
+				debug('Removed duplicate node [%s] from %s' %(name, full_path))
+			else:
+				name_list.append(name)
+	if made_change:
+		new_contents = doc.toxml()
+		f = codecs.open(full_path, 'w')
+		f.write(new_contents)
+		f.close()
 
 class Builder(object):
 
@@ -941,6 +976,7 @@ class Builder(object):
 	def generate_android_manifest(self,compiler):
 
 		self.generate_localizations()
+		self.remove_duplicate_res()
 
 		# NOTE: these are built-in permissions we need -- we probably need to refine when these are needed too
 		permissions_required = ['INTERNET','ACCESS_WIFI_STATE','ACCESS_NETWORK_STATE', 'WRITE_EXTERNAL_STORAGE']
@@ -1500,6 +1536,19 @@ class Builder(object):
 					f.write(new_contents)
 					f.close()
 
+	def remove_duplicate_res(self):
+		for root, dirs, files in os.walk(self.res_dir):
+			remove_ignored_dirs(dirs)
+			for filename in files:
+				if not (filename in resourceFiles):
+					continue
+				full_path = os.path.join(root, filename)
+				node_names_to_check = ["string", "bool", "color", "dimen", "item", "integer",
+					"array", "integer-array", "string-array", "declare-styleable", "attr", "style"]
+				# "strings.xml" is checked in generate_localizations()
+				if filename != "strings.xml":
+					remove_duplicate_nodes_in_res_file(full_path, node_names_to_check)
+
 	def recurse(self, paths, file_glob=None):
 		if paths == None: yield None
 		if not isinstance(paths, list): paths = [paths]
@@ -1525,23 +1574,6 @@ class Builder(object):
 		src_list = []
 		self.module_jars = []
 
-		class_delta = timedelta(seconds=1)
-		for java_file in self.recurse([self.project_src_dir, self.project_gen_dir], '*.java'):
-			if self.project_src_dir in java_file:
-				relative_path = java_file[len(self.project_src_dir)+1:]
-			else:
-				relative_path = java_file[len(self.project_gen_dir)+1:]
-			class_file = os.path.join(self.classes_dir, relative_path.replace('.java', '.class'))
-
-			if Deltafy.needs_update(java_file, class_file) > 0:
-				# the file list file still needs each file escaped apparently
-				debug("adding %s to javac build list" % java_file)
-				src_list.append('"%s"' % java_file.replace("\\", "\\\\"))
-
-		if len(src_list) == 0:
-			# No sources are older than their classfile counterparts, we can skip javac / dex
-			return False
-
 		classpath = os.pathsep.join([self.android_jar, os.pathsep.join(self.android_jars)])
 
 		project_module_dir = os.path.join(self.top_dir,'modules','android')
@@ -1562,6 +1594,22 @@ class Builder(object):
 		if self.deploy_type != 'production':
 			classpath = os.pathsep.join([classpath, os.path.join(self.support_dir, 'lib', 'titanium-debug.jar')])
 			classpath = os.pathsep.join([classpath, os.path.join(self.support_dir, 'lib', 'titanium-profiler.jar')])
+
+		for java_file in self.recurse([self.project_src_dir, self.project_gen_dir], '*.java'):
+			if self.project_src_dir in java_file:
+				relative_path = java_file[len(self.project_src_dir)+1:]
+			else:
+				relative_path = java_file[len(self.project_gen_dir)+1:]
+			class_file = os.path.join(self.classes_dir, relative_path.replace('.java', '.class'))
+
+			if Deltafy.needs_update(java_file, class_file) > 0:
+				# the file list file still needs each file escaped apparently
+				debug("adding %s to javac build list" % java_file)
+				src_list.append('"%s"' % java_file.replace("\\", "\\\\"))
+
+		if len(src_list) == 0:
+			# No sources are older than their classfile counterparts, we can skip javac / dex
+			return False
 
 		debug("Building Java Sources: " + " ".join(src_list))
 		javac_command = [self.javac, '-encoding', 'utf8',
@@ -1601,6 +1649,7 @@ class Builder(object):
 			if path.split('/')[-1].startswith('.'): return True
 			if ext == '.class': return True
 			if 'org/appcelerator/titanium/bindings' in path and ext == '.json': return True
+			if 'tiapp' in path and ext =='.xml': return True
 
 		def skip_js_file(path):
 			return self.compile_js is True and \
@@ -1699,9 +1748,6 @@ class Builder(object):
 		for abi in self.abis:
 			lib_source_dir = os.path.join(sdk_native_libs, abi)
 			lib_dest_dir = 'lib/%s/' % abi
-			if abi == 'x86' and ((not os.path.exists(lib_source_dir)) or self.deploy_type == 'production'):
-				# x86 only in non-production builds for now.
-				continue
 
 			# libtiverify is always included
 			apk_zip.write(os.path.join(lib_source_dir, 'libtiverify.so'), lib_dest_dir + 'libtiverify.so')
@@ -2163,7 +2209,7 @@ class Builder(object):
 
 			fastdev_property = "ti.android.fastdev"
 			fastdev_enabled = (self.deploy_type == 'development' and not self.build_only)
-			if self.tiapp.has_app_property(fastdev_property):
+			if self.tiapp.has_app_property(fastdev_property) and self.deploy_type == 'development':
 				fastdev_enabled = self.tiapp.to_bool(self.tiapp.get_app_property(fastdev_property))
 
 			if fastdev_enabled:
@@ -2305,6 +2351,24 @@ class Builder(object):
 					dex_args = [self.java, '-Xmx1024M', '-Djava.ext.dirs=%s' % self.sdk.get_platform_tools_dir(), '-jar', self.sdk.get_dx_jar()]
 				else:
 					dex_args = [dx, '-JXmx1536M', '-JXX:-UseGCOverheadLimit']
+
+				# Look for New Relic module
+				newrelic_module = None
+				for module in self.modules:
+					if module.path.find("newrelic") > 0:
+						newrelic_module = module
+						break
+
+				# If New Relic is present, add its Java agent to the dex arguments.
+				if newrelic_module:
+					info("Adding New Relic support.")
+
+					# Copy the dexer java agent jar to a tempfile. Eliminates white space from
+					# the module path which causes problems with the dex -Jjavaagent argument.
+					temp_jar = tempfile.NamedTemporaryFile(suffix='.jar', delete=True)
+					shutil.copyfile(os.path.join(newrelic_module.path, 'class.rewriter.jar'), temp_jar.name)
+					dex_args += ['-Jjavaagent:' + os.path.join(temp_jar.name)]
+
 				dex_args += ['--dex', '--output='+self.classes_dex, self.classes_dir]
 				dex_args += self.android_jars
 				dex_args += self.module_jars
@@ -2313,14 +2377,14 @@ class Builder(object):
 				if self.deploy_type != 'production':
 					dex_args.append(os.path.join(self.support_dir, 'lib', 'titanium-debug.jar'))
 					dex_args.append(os.path.join(self.support_dir, 'lib', 'titanium-profiler.jar'))
-					# the verifier depends on Ti.Network classes, so we may need to inject it
-					has_network_jar = False
-					for jar in self.android_jars:
-						if jar.endswith('titanium-network.jar'):
-							has_network_jar = True
-							break
-					if not has_network_jar:
-						dex_args.append(os.path.join(self.support_dir, 'modules', 'titanium-network.jar'))
+				# the verifier depends on Ti.Network classes, so we may need to inject it
+				has_network_jar = False
+				for jar in self.android_jars:
+					if jar.endswith('titanium-network.jar'):
+						has_network_jar = True
+						break
+				if not has_network_jar:
+					dex_args.append(os.path.join(self.support_dir, 'modules', 'titanium-network.jar'))
 
 				info("Compiling Android Resources... This could take some time")
 				# TODO - Document Exit message
