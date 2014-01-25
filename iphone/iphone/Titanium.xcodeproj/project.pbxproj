@@ -507,15 +507,9 @@
 		5081CEFA15F8100E00C881D8 /* TiExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5081CEF715F8100E00C881D8 /* TiExceptionHandler.m */; };
 		508DB8FC16D431F000F9910E /* libti_ios_profiler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 502E9D2316CAFB9D00C1BD26 /* libti_ios_profiler.a */; };
 		508DB8FD16D431F100F9910E /* libti_ios_profiler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 502E9D2316CAFB9D00C1BD26 /* libti_ios_profiler.a */; };
-		79BCCE9C175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
-		79BCCE9D175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
-		79BCCE9E175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */; };
-		79BCCEA617553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */; };
-		79BCCEA717553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */; };
-		79BCCEA817553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */; };
-		8406A97616CED43D00EB62FB /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
-		8406A97716CED45400EB62FB /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
-		840A9D4916CEBF24003AA591 /* TiMapCustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */; };
+		7931246A1893F7F1002BEF37 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 793124691893F7F1002BEF37 /* TiUITabProxy+SMExt.m */; };
+		7931246B1893F7F1002BEF37 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 793124691893F7F1002BEF37 /* TiUITabProxy+SMExt.m */; };
+		7931246C1893F7F1002BEF37 /* TiUITabProxy+SMExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 793124691893F7F1002BEF37 /* TiUITabProxy+SMExt.m */; };
 		841CCAD11807395C00C8DB76 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841CCAD01807395C00C8DB76 /* CoreText.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		841CCAD21807396E00C8DB76 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841CCAD01807395C00C8DB76 /* CoreText.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		841CCAD31807397800C8DB76 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841CCAD01807395C00C8DB76 /* CoreText.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -1432,12 +1426,8 @@
 		502E9D2316CAFB9D00C1BD26 /* libti_ios_profiler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libti_ios_profiler.a; path = ../lib/libti_ios_profiler.a; sourceTree = "<group>"; };
 		5081CEF615F8100E00C881D8 /* TiExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiExceptionHandler.h; sourceTree = "<group>"; };
 		5081CEF715F8100E00C881D8 /* TiExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiExceptionHandler.m; sourceTree = "<group>"; };
-		79BCCE9A175525FC00288CD7 /* TiUIScrollableView+SMExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiUIScrollableView+SMExt.h"; sourceTree = "<group>"; };
-		79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TiUIScrollableView+SMExt.m"; sourceTree = "<group>"; };
-		79BCCEA417553FDB00288CD7 /* TiUITabProxy+SMExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiUITabProxy+SMExt.h"; sourceTree = "<group>"; };
-		79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TiUITabProxy+SMExt.m"; sourceTree = "<group>"; };
-		840A9D4716CEBF24003AA591 /* TiMapCustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiMapCustomAnnotationView.h; sourceTree = "<group>"; };
-		840A9D4816CEBF24003AA591 /* TiMapCustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiMapCustomAnnotationView.m; sourceTree = "<group>"; };
+		793124681893F7F1002BEF37 /* TiUITabProxy+SMExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TiUITabProxy+SMExt.h"; path = "../Classes/TiUITabProxy+SMExt.h"; sourceTree = "<group>"; };
+		793124691893F7F1002BEF37 /* TiUITabProxy+SMExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TiUITabProxy+SMExt.m"; path = "../Classes/TiUITabProxy+SMExt.m"; sourceTree = "<group>"; };
 		841CCAD01807395C00C8DB76 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		843FA58217BD4DFF0064E061 /* TiUIiOSNavWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiUIiOSNavWindow.h; sourceTree = "<group>"; };
 		843FA58317BD4DFF0064E061 /* TiUIiOSNavWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiUIiOSNavWindow.m; sourceTree = "<group>"; };
@@ -1771,7 +1761,6 @@
 		24CA8902111160BE0084E2DE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				79BCCE99175525DB00288CD7 /* SMExt */,
 				24EB07D1111D420D001DC2D1 /* DOM */,
 				24CA8A09111161D60084E2DE /* Modules */,
 				24CA8A0A111161DC0084E2DE /* Utils */,
@@ -2752,6 +2741,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				793124681893F7F1002BEF37 /* TiUITabProxy+SMExt.h */,
+				793124691893F7F1002BEF37 /* TiUITabProxy+SMExt.m */,
 				24CA8902111160BE0084E2DE /* Classes */,
 				24CA8903111160C30084E2DE /* Thirdparty */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -2879,15 +2870,6 @@
 			name = ListView;
 			sourceTree = "<group>";
 		};
-		79BCCE99175525DB00288CD7 /* SMExt */ = {
-			isa = PBXGroup;
-			children = (
-				79BCCE9A175525FC00288CD7 /* TiUIScrollableView+SMExt.h */,
-				79BCCE9B175525FC00288CD7 /* TiUIScrollableView+SMExt.m */,
-				79BCCEA417553FDB00288CD7 /* TiUITabProxy+SMExt.h */,
-				79BCCEA517553FDB00288CD7 /* TiUITabProxy+SMExt.m */,
-			);
-			name = SMExt;
 		84A00FED17FB392E00D4BF94 /* Dynamics */ = {
 			isa = PBXGroup;
 			children = (
@@ -2929,7 +2911,6 @@
 				843FA58317BD4DFF0064E061 /* TiUIiOSNavWindow.m */,
 			);
 			name = "Nav Window";
->>>>>>> upstream/master
 			sourceTree = "<group>";
 		};
 		B43663DA11138AB300782262 /* Scrollable View */ = {
@@ -3262,6 +3243,7 @@
 				24CA895F111161050084E2DE /* ASIFormDataRequest.m in Sources */,
 				24CA8960111161050084E2DE /* ASIHTTPRequest.m in Sources */,
 				243ECCB81126988200639DF4 /* TiUIiPhoneScrollIndicatorStyleProxy.m in Sources */,
+				7931246A1893F7F1002BEF37 /* TiUITabProxy+SMExt.m in Sources */,
 				24CA8961111161050084E2DE /* ASIInputStream.m in Sources */,
 				24CA8962111161050084E2DE /* ASINetworkQueue.m in Sources */,
 				84A00FF517FB675E00D4BF94 /* TiSnapBehavior.m in Sources */,
@@ -3532,8 +3514,6 @@
 				502A68E616EEAA7500661EF6 /* TiUIListViewProxy.m in Sources */,
 				502A68EB16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870217417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
-				79BCCE9C175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
-				79BCCEA617553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3551,6 +3531,7 @@
 				24D8E3C1119B9D8A00F8CAA6 /* AFUIImageReflection.m in Sources */,
 				24D8E3C2119B9D8A00F8CAA6 /* ASIAuthenticationDialog.m in Sources */,
 				24D8E3C3119B9D8A00F8CAA6 /* ASIFormDataRequest.m in Sources */,
+				7931246B1893F7F1002BEF37 /* TiUITabProxy+SMExt.m in Sources */,
 				24D8E3C4119B9D8A00F8CAA6 /* ASIHTTPRequest.m in Sources */,
 				84A00FF617FB675E00D4BF94 /* TiSnapBehavior.m in Sources */,
 				24D8E3C5119B9D8A00F8CAA6 /* TiUIiPhoneScrollIndicatorStyleProxy.m in Sources */,
@@ -3821,8 +3802,6 @@
 				502A68E716EEAA7500661EF6 /* TiUIListViewProxy.m in Sources */,
 				502A68EC16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870317417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
-				79BCCE9D175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
-				79BCCEA717553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3840,6 +3819,7 @@
 				DABB36A712E8CB280026A6EA /* AFUIImageReflection.m in Sources */,
 				DABB36A812E8CB280026A6EA /* ASIAuthenticationDialog.m in Sources */,
 				DABB36A912E8CB280026A6EA /* ASIFormDataRequest.m in Sources */,
+				7931246C1893F7F1002BEF37 /* TiUITabProxy+SMExt.m in Sources */,
 				DABB36AA12E8CB280026A6EA /* ASIHTTPRequest.m in Sources */,
 				84A00FF717FB675E00D4BF94 /* TiSnapBehavior.m in Sources */,
 				DABB36AB12E8CB280026A6EA /* TiUIiPhoneScrollIndicatorStyleProxy.m in Sources */,
@@ -4110,8 +4090,6 @@
 				502A68E816EEAA7500661EF6 /* TiUIListViewProxy.m in Sources */,
 				502A68ED16F0428500661EF6 /* TiViewTemplate.m in Sources */,
 				84C3870417417CB800970D26 /* TiSelectedCellbackgroundView.m in Sources */,
-				79BCCE9E175525FC00288CD7 /* TiUIScrollableView+SMExt.m in Sources */,
-				79BCCEA817553FDB00288CD7 /* TiUITabProxy+SMExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

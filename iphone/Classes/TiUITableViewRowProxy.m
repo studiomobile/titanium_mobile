@@ -375,9 +375,9 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	[(TiUITableViewCell *)cell setBackgroundGradient_:[self valueForKey:@"backgroundGradient"]];
 	[(TiUITableViewCell *)cell setSelectedBackgroundGradient_:[self valueForKey:@"selectedBackgroundGradient"]];
 
-	id bgColor = [self valueForKey:@"backgroundColor"];
-	cell.backgroundColor = [(TiColor*)bgColor _color];
 	id bgImage = [self valueForKey:@"backgroundImage"];
+	id selBgColor = [self valueForKey:@"selectedBackgroundColor"];
+
 	if (bgImage!=nil)
 	{
 		NSURL *url = [TiUtils toURL:bgImage proxy:(TiProxy*)table.proxy];
@@ -396,6 +396,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	{
 		cell.backgroundView = nil;
 	}
+	
     id selBgImage = [self valueForKey:@"selectedBackgroundImage"];
     if (selBgImage!=nil) {
         NSURL *url = [TiUtils toURL:selBgImage proxy:(TiProxy*)table.proxy];
@@ -425,7 +426,6 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
                 default:theColor = [TiUtils isIOS7OrGreater] ? [Webcolor webColorNamed:@"#e0e0e0"] : [Webcolor webColorNamed:@"#0272ed"];break;
             }
         }
-        selectedBGView.rowProxy = self;
         selectedBGView.fillColor = theColor;
         int count = [section rowCount];
         if (count == 1) {
@@ -877,6 +877,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	[self replaceValue:newGradient forKey:@"selectedBackgroundGradient" notification:NO];
 	TiThreadPerformOnMainThread(^{[callbackCell setSelectedBackgroundGradient_:newGradient];}, NO);
 }
+
 
 -(void)propertyChanged:(NSString*)key oldValue:(id)oldValue newValue:(id)newValue proxy:(TiProxy*)proxy
 {

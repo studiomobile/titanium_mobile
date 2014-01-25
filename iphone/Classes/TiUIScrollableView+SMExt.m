@@ -16,4 +16,24 @@
     self.scrollview.delaysContentTouches = delaysContentTouches;	
 }
 
+-(void)setPageIndicatorTintColor_:(id)args
+{
+    TiColor* val = [TiUtils colorValue:args];
+    if (val != nil) {
+        if (showPageControl && (scrollview!=nil) && ([[scrollview subviews] count]>0)) {
+            [[self pagecontrol] setPageIndicatorTintColor:[val _color]];
+        }
+    }
+}
+
+-(void)setPagingControlColor_:(id)args
+{
+    TiColor* val = [TiUtils colorValue:args];
+    if (val != nil) {
+        if (showPageControl && (scrollview!=nil) && ([[scrollview subviews] count]>0)) {
+            [[self pagecontrol] setCurrentPageIndicatorTintColor:[val _color]];
+        }
+    }
+}
+
 @end

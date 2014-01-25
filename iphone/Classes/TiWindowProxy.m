@@ -618,14 +618,6 @@
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-<<<<<<< HEAD
-    NSNumber *navBarHidden = [self valueForUndefinedKey:@"navBarHidden"];
-    [controller.navigationController setNavigationBarHidden:[navBarHidden boolValue] animated:animated];
-	[self parentWillShow];
-	TiThreadProcessPendingMainThreadBlocks(0.1, YES, nil);
-=======
-    
->>>>>>> upstream/master
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
