@@ -2623,6 +2623,16 @@ return result;	\
     animateHide = YES;
     [self performSelector:@selector(hideSearchScreen:) withObject:nil afterDelay:0.2];
 }
+
+//honor tableviewrow backgroundColor property
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    TiUITableViewCell *ticell = (TiUITableViewCell*)cell;
+    TiColor* color = [ticell.proxy valueForUndefinedKey:@"backgroundColor"];
+    if (color) {
+        cell.backgroundColor = [color _color];
+    }
+}
+
 @end
 
 #endif
