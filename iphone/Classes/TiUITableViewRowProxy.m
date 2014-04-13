@@ -51,7 +51,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 			return subProxy;
 		}
 	}
-
+    
 	//By now, no subviews have claimed ownership.
 	if ([targetView respondsToSelector:@selector(proxy)])
 	{
@@ -89,7 +89,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	return result;
 }
 
-- (UIView *)hitTest:(CGPoint) point withEvent:(UIEvent *)event 
+- (UIView *)hitTest:(CGPoint) point withEvent:(UIEvent *)event
 {
     UIView * result = [super hitTest:point withEvent:event];
 	[self setHitPoint:point];
@@ -99,7 +99,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 		[self setHitTarget:DeepScanForProxyOfViewContainingPoint(self,point)];
 		return nil;
 	}
-
+    
 	if ([result respondsToSelector:@selector(proxy)])
 	{
 		[self setHitTarget:[(TiUIView *)result proxy]];
@@ -108,7 +108,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	{
 		[self clearHitTarget];
 	}
-
+    
 	return result;
 }
 
@@ -147,7 +147,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 {
 	if (tableClass==nil)
 	{
-		// must use undefined key since class is a special 
+		// must use undefined key since class is a special
 		// property on the NSObject class
 		id value = [self valueForUndefinedKey:@"className"];
 		if (value==nil)
@@ -203,7 +203,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
     if ([key isEqualToString:[@"lay" stringByAppendingString:@"out"]]) {
-        //CAN NOT USE THE MACRO 
+        //CAN NOT USE THE MACRO
         if (ENFORCE_BATCH_UPDATE) {
             if (updateStarted) {
                 [self setTempProperty:value forKey:key]; \
@@ -286,13 +286,13 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	if ([data objectForKey:@"header"])
 	{
 		[section setValue:[data objectForKey:@"header"] forUndefinedKey:@"headerTitle"];
-		// we can return since we're reloading the section, will cause the 
+		// we can return since we're reloading the section, will cause the
 		// row to be repainted at the same time
 	}
 	if ([data objectForKey:@"footer"])
 	{
 		[section setValue:[data objectForKey:@"footer"] forUndefinedKey:@"footerTitle"];
-		// we can return since we're reloading the section, will cause the 
+		// we can return since we're reloading the section, will cause the
 		// row to be repainted at the same time
 	}
 	modifyingRow = NO;
@@ -301,7 +301,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 -(void)configureTitle:(UITableViewCell*)cell
 {
 	UILabel * textLabel = [cell textLabel];
-
+    
 	NSString *title = [self valueForKey:@"title"];
 	if (title!=nil)
 	{
@@ -374,10 +374,10 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 {
 	[(TiUITableViewCell *)cell setBackgroundGradient_:[self valueForKey:@"backgroundGradient"]];
 	[(TiUITableViewCell *)cell setSelectedBackgroundGradient_:[self valueForKey:@"selectedBackgroundGradient"]];
-
+    
 	id bgImage = [self valueForKey:@"backgroundImage"];
 	id selBgColor = [self valueForKey:@"selectedBackgroundColor"];
-
+    
 	if (bgImage!=nil)
 	{
 		NSURL *url = [TiUtils toURL:bgImage proxy:(TiProxy*)table.proxy];
@@ -417,6 +417,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
         }
         TiSelectedCellBackgroundView *selectedBGView = (TiSelectedCellBackgroundView*)cell.selectedBackgroundView;
         selectedBGView.grouped = [[table tableView] style]==UITableViewStyleGrouped;
+        selectedBGView.rowProxy = self;
         UIColor* theColor = [Webcolor webColorNamed:selBgColor];
         if (theColor == nil) {
             switch (cell.selectionStyle) {
@@ -551,7 +552,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 		return;
 	}
 	RELEASE_TO_NIL(rowContainerView);
-
+    
     // ... But that's not enough. We need to detatch the views
     // for all children of the row, to clean up memory.
     for (TiViewProxy* child in [self children]) {
@@ -568,7 +569,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	RELEASE_TO_NIL(rowContainerView);
     for (TiViewProxy* child in [self children]) {
         [child detachView];
-    }	
+    }
 }
 
 -(void)configureChildren:(UITableViewCell*)cell
@@ -584,7 +585,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
         CGSize cellSize = [(TiUITableViewCell*)cell computeCellSize];
 		CGFloat rowWidth = cellSize.width;
 		CGFloat rowHeight = cellSize.height;
-
+        
 		if (rowHeight < rect.size.height || rowWidth < rect.size.width)
 		{
 			rect.size.height = rowHeight;
@@ -713,15 +714,15 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 }
 
 -(void)triggerRowUpdate
-{	
+{
 	if ([self isAttached] && self.viewAttached && !modifyingRow && !attaching)
 	{
 		if (OSAtomicTestAndSetBarrier(NEEDS_UPDATE_ROW, &dirtyRowFlags)) {
 			return;
 		}
 		
-		TiUITableViewAction *action = [[[TiUITableViewAction alloc] initWithObject:self 
-																		 animation:nil 
+		TiUITableViewAction *action = [[[TiUITableViewAction alloc] initWithObject:self
+																		 animation:nil
 																			  type:TiUITableViewActionRowReload] autorelease];
 		TiThreadPerformOnMainThread(^{[self updateRow:action];}, NO);
 	}
@@ -846,7 +847,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 
 -(void)setBackgroundImage:(id)arg
 {
-	[self replaceValue:arg forKey:@"backgroundImage" notification:NO];	
+	[self replaceValue:arg forKey:@"backgroundImage" notification:NO];
     TiThreadPerformOnMainThread(^{
         if ([self viewAttached]) {
             [self configureBackground:callbackCell];
@@ -856,7 +857,7 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 
 -(void)setSelectedBackgroundImage:(id)arg
 {
-	[self replaceValue:arg forKey:@"selectedBackgroundImage" notification:NO];	
+	[self replaceValue:arg forKey:@"selectedBackgroundImage" notification:NO];
     TiThreadPerformOnMainThread(^{
         if ([self viewAttached]) {
             [self configureBackground:callbackCell];
@@ -886,11 +887,11 @@ TiProxy * DeepScanForProxyOfViewContainingPoint(UIView * targetView, CGPoint poi
 	if (TableViewRowProperties==nil)
 	{
 		TableViewRowProperties = [[NSSet alloc] initWithObjects:
-					@"title", @"accessibilityLabel", @"backgroundImage",
-					@"leftImage",@"hasDetail",@"hasCheck",@"hasChild",	
-					@"indentionLevel",@"selectionStyle",@"color",@"selectedColor",
-					@"height",@"width",@"backgroundColor",@"rightImage",
-					nil];
+                                  @"title", @"accessibilityLabel", @"backgroundImage",
+                                  @"leftImage",@"hasDetail",@"hasCheck",@"hasChild",
+                                  @"indentionLevel",@"selectionStyle",@"color",@"selectedColor",
+                                  @"height",@"width",@"backgroundColor",@"rightImage",
+                                  nil];
 	}
 	
     if ([TableViewRowProperties member:key]!=nil)
