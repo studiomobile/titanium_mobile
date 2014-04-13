@@ -497,35 +497,6 @@
     }
 }
 
--(int)pageNumFromArg:(id)args
-{
-    int pageNum = 0;
-    if ([args isKindOfClass:[TiViewProxy class]])
-    {
-        [[self proxy] lockViews];
-        pageNum = [[[self proxy] viewProxies] indexOfObject:args];
-        [[self proxy] unlockViews];
-    }
-    else
-    {
-        pageNum = [TiUtils intValue:args];
-    }
-    
-    return pageNum;
-}
-
--(void)scrollToView:(id)args
-{
-    int pageNum = [self pageNumFromArg:args];
-    [[self scrollview] setContentOffset:CGPointMake([self bounds].size.width * pageNum, 0) animated:YES];
-    [pageControl setCurrentPage:pageNum];
-    currentPage = pageNum;
-    
-    [self manageCache:pageNum];
-    
-    [self.proxy replaceValue:NUMINT(pageNum) forKey:@"currentPage" notification:NO];
-}
-
 -(void)addView:(id)viewproxy
 {
     [self refreshScrollView:[self bounds] readd:YES];
@@ -544,22 +515,22 @@
     [self refreshScrollView:[self bounds] readd:YES];
 }
 
--(void)setCurrentPage_:(id)page
-{
-    
+-(void)setCurrentPage:(id)page animated:(NSNumber*)animate {
     int newPage = [TiUtils intValue:page];
     int viewsCount = [[self proxy] viewCount];
-
-    if (newPage >=0 && newPage < viewsCount)
-    {
-        [scrollview setContentOffset:CGPointMake([self bounds].size.width * newPage, 0) animated:NO];
+    
+    if (newPage >=0 && newPage < viewsCount) {
+        [scrollview setContentOffset:CGPointMake([self bounds].size.width * newPage, 0) animated:[animate boolValue]];
         currentPage = newPage;
         pageControl.currentPage = newPage;
-        
         [self manageCache:newPage];
-        
         [self.proxy replaceValue:NUMINT(newPage) forKey:@"currentPage" notification:NO];
     }
+}
+
+-(void)setCurrentPage_:(id)page
+{
+    [self setCurrentPage:page animated:NUMBOOL(NO)];
 }
 
 -(void)setScrollingEnabled_:(id)enabled
