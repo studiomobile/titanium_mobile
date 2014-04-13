@@ -284,7 +284,7 @@
 - (void)viewWillAppear:(BOOL)animated;    // Called when the view is about to made visible. Default does nothing
 {
     shouldUpdateNavBar = YES;
-	[self setupWindowDecorations];
+	[self setupWindowDecorations:animated];
 	[super viewWillAppear:animated];
 }
 
@@ -904,13 +904,13 @@ else{\
 }\
 }\
 
--(void)setupWindowDecorations
+-(void)setupWindowDecorations:(BOOL)animated
 {
     if ((controller == nil) || ([controller navigationController] == nil)) {
         return;
     }
     
-    [[controller navigationController] setToolbarHidden:!hasToolbar animated:YES];
+    [[controller navigationController] setToolbarHidden:!hasToolbar animated:animated];
     //Need to clear title for titleAttributes to apply correctly on iOS6.
     [[controller navigationItem] setTitle:nil];
     SETPROP(@"titleAttributes",setTitleAttributes);
@@ -929,7 +929,7 @@ else{\
 
     id navBarHidden = [self valueForKey:@"navBarHidden"];
     if (navBarHidden!=nil) {
-        id properties = [NSArray arrayWithObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"animated"]];
+        id properties = [NSArray arrayWithObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:animated] forKey:@"animated"]];
         if ([TiUtils boolValue:navBarHidden]) {
             [self hideNavBar:properties];
         }
