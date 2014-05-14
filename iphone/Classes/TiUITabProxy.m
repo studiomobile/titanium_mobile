@@ -532,8 +532,10 @@ extern void updateTitleTextAttributes(TiUITabProxy *tab, UIBarItem *item);
         
         systemTab = NO;
         ourItem = [[[UITabBarItem alloc] initWithTitle:title image:image selectedImage:activeImage] autorelease];
+        updateTitleTextAttributes(self, ourItem);
         [ourItem setBadgeValue:badgeValue];
         [rootController setTabBarItem:ourItem];
+
         return;
     }
     
@@ -555,9 +557,8 @@ extern void updateTitleTextAttributes(TiUITabProxy *tab, UIBarItem *item);
 	{
 		[ourItem setFinishedSelectedImage:activeImage withFinishedUnselectedImage:image];
 	}
-	
-	[ourItem setBadgeValue:badgeValue];
-    updateTitleTextAttributes(self, ourItem);
+	updateTitleTextAttributes(self, ourItem);
+	[ourItem setBadgeValue:badgeValue];    
 }
 
 -(void)setTitle:(id)title
