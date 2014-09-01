@@ -5,7 +5,7 @@
 //  Created by Andrey Verbin on 28.05.13.
 //
 //
-
+#ifdef USE_TI_UITAB
 #import "TiUITabProxy+SMExt.h"
 
 @interface TiUITabProxy ()
@@ -85,3 +85,4 @@ void updateTitleTextAttributes(TiUITabProxy *tab, UIBarItem *ourItem) {
         [ourItem setTitleTextAttributes:titleTextAttributesSelected forState:UIControlStateSelected];
     }
 }
+#endif

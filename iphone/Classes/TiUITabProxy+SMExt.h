@@ -5,7 +5,7 @@
 //  Created by Andrey Verbin on 28.05.13.
 //
 //
-
+#ifdef USE_TI_UITAB
 #import "TiUITabProxy.h"
 
 @interface TiUITabProxy (SMExt)
@@ -16,3 +16,4 @@
 @end
 
 void updateTitleTextAttributes(TiUITabProxy *tab, UIBarItem *item);
+#endif
